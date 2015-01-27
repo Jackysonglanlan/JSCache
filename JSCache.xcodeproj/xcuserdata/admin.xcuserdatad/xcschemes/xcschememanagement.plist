@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>JSCacheFramework.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -18,6 +23,11 @@
 			<true/>
 		</dict>
 		<key>8478E74D1A7788D90093DD99</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>849CCD541A778A64008D3798</key>
 		<dict>
 			<key>primary</key>
 			<true/>
