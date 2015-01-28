@@ -13,8 +13,6 @@
 #import "JSCacheItem.h"
 #import "JSCacheItemPool.h"
 
-#import "SynthesizeSingleton.h"
-
 #import "JSShortHand.h"
 
 #pragma mark JSCacheRefresher
@@ -147,7 +145,7 @@
 #pragma mark JSDataCacheService
 
 @implementation JSDataCacheService{
-  // [cateName -> TTCacheCategory]
+  // [cateName -> JSCacheCategory]
   NSMutableDictionary *underlineCache;
   JSCacheItemPool *itemPool;
   SQLiteInstanceManager *sqlManager;
@@ -161,7 +159,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
     itemPool = [JSCacheItemPool sharedInstance];
     sqlManager = [SQLiteInstanceManager sharedManager];
 
-      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cleanCacheOnly)
+      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cleanCacheOnly:)
                                                    name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
   }
   return self;
@@ -170,7 +168,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
 #pragma mark - private
 
 #pragma mark MemoryWarning
--(void)cleanCacheOnly{
+-(void)cleanCacheOnly:(NSNotification*)noti{
   [self cleanCache:NO];
 }
 

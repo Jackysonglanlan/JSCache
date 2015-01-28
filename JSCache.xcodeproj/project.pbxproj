@@ -394,12 +394,12 @@
 		849CCDB81A778D8A008D3798 /* Cache */ = {
 			isa = PBXGroup;
 			children = (
+				849CCDBF1A778D8A008D3798 /* JSCacheItemPool.h */,
+				849CCDC01A778D8A008D3798 /* JSCacheItemPool.m */,
 				849CCDB91A778D8A008D3798 /* JSCacheCategory.h */,
 				849CCDBA1A778D8A008D3798 /* JSCacheCategory.m */,
 				849CCDBD1A778D8A008D3798 /* JSCacheItem.h */,
 				849CCDBE1A778D8A008D3798 /* JSCacheItem.m */,
-				849CCDBF1A778D8A008D3798 /* JSCacheItemPool.h */,
-				849CCDC01A778D8A008D3798 /* JSCacheItemPool.m */,
 				849CCDC11A778D8A008D3798 /* JSCacheItemRef.h */,
 				849CCDC21A778D8A008D3798 /* JSCacheItemRef.m */,
 			);
