@@ -6,14 +6,14 @@
 //  Copyright (c) 2013年 tiantian. All rights reserved.
 //
 
-#import "TTCacheItemPool.h"
+#import "JSCacheItemPool.h"
 #import "SQLiteInstanceManager.h"
 
-@implementation TTCacheItemPool{
+@implementation JSCacheItemPool{
   // [entityId -> TTCacheItem]
   NSMutableDictionary *pool;
 }
-SYNTHESIZE_SINGLETON_FOR_CLASS(TTCacheItemPool);
+SYNTHESIZE_SINGLETON_FOR_CLASS(JSCacheItemPool);
 
 - (id)init{
   self = [super init];
@@ -27,9 +27,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTCacheItemPool);
   return pool[entityId] != nil;
 }
 
--(TTCacheItem*)getItemOfEntityId:(NSString*)entityId{
+-(JSCacheItem*)getItemOfEntityId:(NSString*)entityId{
   // read cache first
-  TTCacheItem *item = pool[entityId];
+  JSCacheItem *item = pool[entityId];
   
   if (item){
     return item;
@@ -38,7 +38,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTCacheItemPool);
   // not in cache
 
   // find in DB
-  item = [TTCacheItem findItemOfEntityId:entityId];
+  item = [JSCacheItem findItemOfEntityId:entityId];
   
   // if in DB
   if (item) {    
@@ -52,8 +52,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTCacheItemPool);
 -(NSArray*)getItemsInRefList:(NSArray*)itemRefList{
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:itemRefList.count];
     
-    for (TTCacheItemRef *ref in itemRefList) {
-        TTCacheItem *item = [self getItemOfEntityId:ref.entityId];
+    for (JSCacheItemRef *ref in itemRefList) {
+        JSCacheItem *item = [self getItemOfEntityId:ref.entityId];
         if (item) {
             [items addObject:item];
         }
@@ -64,13 +64,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTCacheItemPool);
 
 -(void)syncCacheItemsToDB:(NSArray *)entityIdList{
     for (NSString *entityId in entityIdList) {
-        TTCacheItem *item = pool[entityId];
+        JSCacheItem *item = pool[entityId];
         // if found, sync to DB
         [item save];
     }
 }
 
--(void)addOrUpdateItem:(TTCacheItem *)item data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB{
+-(void)addOrUpdateItem:(JSCacheItem *)item data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB{
   if (!item) return;
   
   item.data = data;
@@ -81,7 +81,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTCacheItemPool);
   [self addOrUpdateItemRefreshTimestamp:item needSyncToDB:needSyncToDB];
 }
 
--(void)addOrUpdateItemRefreshTimestamp:(TTCacheItem*)item needSyncToDB:(BOOL)needSyncToDB{
+-(void)addOrUpdateItemRefreshTimestamp:(JSCacheItem*)item needSyncToDB:(BOOL)needSyncToDB{
   if (!item) return;
   
   // add / update cache
@@ -100,7 +100,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTCacheItemPool);
   if (!needSyncToDB) return;
 
   [[SQLiteInstanceManager sharedManager] executeUpdateSQL:[NSString stringWithFormat:@"delete from %@ where entity_id = '%@'",
-                                                           [TTCacheItem tableName],entityId]];
+                                                           [JSCacheItem tableName],entityId]];
 }
 
 -(void)clean{

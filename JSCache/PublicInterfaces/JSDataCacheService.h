@@ -6,11 +6,11 @@
 //  Copyright (c) 2013年 tiantian. All rights reserved.
 //
 
-#import "TTCachedData.h"
+#import "JSCachedData.h"
 
 #import "SynthesizeSingleton.h"
 
-@interface TTCacheRefresher : NSObject
+@interface JSCacheRefresher : NSObject
 @property(nonatomic,copy) void (^dbOperationDidFinishBlock)(void);
 
 // dataList is Array of NSDictionary
@@ -24,23 +24,23 @@
 @end
 
 // Use this class to manange App's Cache
-@interface TTDataCacheService : NSObject
-SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(TTDataCacheService);
+@interface JSDataCacheService : NSObject
+SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(JSDataCacheService);
 
 #pragma mark get
 
 -(NSTimeInterval)getRefreshTime:(NSString*)cateName;
 
--(TTCachedData*)getAndRefreshSingleCachedData:(NSString*)cateName entityId:(NSString*)entityId
-                               cacheRefresher:(void (^)(TTCacheRefresher *refresher))refreshBlock
+-(JSCachedData*)getAndRefreshSingleCachedData:(NSString*)cateName entityId:(NSString*)entityId
+                               cacheRefresher:(void (^)(JSCacheRefresher *refresher))refreshBlock
                      refreshIntervalInSeconds:(NSTimeInterval)interval;
 
--(NSArray*)getAndRefreshCachedData:(NSString*)cateName cacheRefresher:(void (^)(TTCacheRefresher *refresher))refresher
+-(NSArray*)getAndRefreshCachedData:(NSString*)cateName cacheRefresher:(void (^)(JSCacheRefresher *refresher))refresher
                     entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter refreshIntervalInSeconds:(NSTimeInterval)interval;
 
 -(NSArray*)getCachedData:(NSString*)cateName;
 
--(TTCachedData*)getCachedDataOfEntityId:(NSString*)entityId;
+-(JSCachedData*)getCachedDataOfEntityId:(NSString*)entityId;
 
 -(NSDictionary*)getCachedData:(NSString*)cateName entityId:(NSString*)entityId;
 

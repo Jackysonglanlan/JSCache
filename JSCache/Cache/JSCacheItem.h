@@ -8,13 +8,13 @@
 
 #import "SQLitePersistentObject.h"
 
-@interface TTCacheItem : SQLitePersistentObject
+@interface JSCacheItem : SQLitePersistentObject
 
 @property(nonatomic,retain) NSString *origJsonData;
 @property(nonatomic,retain) NSString *entityId;
 @property(nonatomic,retain) NSDictionary *data;
 @property(nonatomic,assign) NSTimeInterval refreshTimestamp;// seconds since 1970
 
-+(TTCacheItem*)findItemOfEntityId:(NSString*)entityId;
++(JSCacheItem*)findItemOfEntityId:(NSString*)entityId;
 
 @end

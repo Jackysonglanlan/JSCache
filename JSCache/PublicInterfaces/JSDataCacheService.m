@@ -6,12 +6,12 @@
 //  Copyright (c) 2013年 tiantian. All rights reserved.
 //
 
-#import "TTDataCacheService.h"
+#import "JSDataCacheService.h"
 #import "SQLiteInstanceManager.h"
 
-#import "TTCacheCategory.h"
-#import "TTCacheItem.h"
-#import "TTCacheItemPool.h"
+#import "JSCacheCategory.h"
+#import "JSCacheItem.h"
+#import "JSCacheItemPool.h"
 
 #import "SynthesizeSingleton.h"
 
@@ -19,9 +19,9 @@
 
 #pragma mark TTCacheRefresher
 
-@implementation TTCacheRefresher{
+@implementation JSCacheRefresher{
   NSMutableDictionary *underlineCache;
-  TTCacheItemPool *itemPool;
+  JSCacheItemPool *itemPool;
   NSString *cateName;
   NSString *(^entityIdGetter)(NSDictionary *data);
   
@@ -36,7 +36,7 @@
     underlineCache = cache;
     cateName = [name retain];
     entityIdGetter = [getter copy];
-    itemPool = [TTCacheItemPool sharedInstance];
+    itemPool = [JSCacheItemPool sharedInstance];
     sqlManager = [SQLiteInstanceManager sharedManager];
   }
   return self;
@@ -52,7 +52,7 @@
 -(void)addToCache:(NSArray*)dataList needSyncToDB:(BOOL)needSyncToDB{
   if (dataList.count == 0) return;
   
-  TTCacheCategory *cate = [TTCacheCategory new];
+  JSCacheCategory *cate = [JSCacheCategory new];
   cate.name = cateName;
   cate.refreshTimestamp = [[NSDate date] timeIntervalSince1970];
   
@@ -83,7 +83,7 @@
 }
 
 -(void)insertToCache:(NSArray*)dataList{
-  TTCacheCategory *cate = underlineCache[cateName];
+  JSCacheCategory *cate = underlineCache[cateName];
   
   // if haven't had category yet, we auto add it
   if (!cate) {
@@ -95,7 +95,7 @@
         NSString *entityId = entityIdGetter(data);// get entity id
         
         // items need sync to DB
-        TTCacheItem *item = [itemPool getItemOfEntityId:entityId];
+        JSCacheItem *item = [itemPool getItemOfEntityId:entityId];
         if (item) {
             item.data = data;// set new data
             [itemsNeedSyncToDB addObject:item];
@@ -107,7 +107,7 @@
   
   // transaction batch save
   [sqlManager doInTransactionAsync:^{
-      for (TTCacheItem *item in itemsNeedSyncToDB) {
+      for (JSCacheItem *item in itemsNeedSyncToDB) {
           [itemPool addOrUpdateItem:item data:item.data needSyncToDB:YES];
       }
   }
@@ -121,7 +121,7 @@
 }
 
 // save all data of the category into DB
--(void)saveDataToDB:(TTCacheCategory*)cate{
+-(void)saveDataToDB:(JSCacheCategory*)cate{
   [cate save];
   [cate saveItems];
 }
@@ -129,14 +129,14 @@
 // remove all data of the category from DB
 -(void)removeAllCachedDataInDBWithCateName:(NSString*)name{
   // delete related records in TTCacheCategory table
-  if ([sqlManager tableExists:[TTCacheCategory tableName]]) {
-    [[TTCacheCategory findFirstByCriteria:@"where name = '%@'",name] deleteObject];
+  if ([sqlManager tableExists:[JSCacheCategory tableName]]) {
+    [[JSCacheCategory findFirstByCriteria:@"where name = '%@'",name] deleteObject];
   }
 
   // delete related records in TTCacheItemRef table
-  if ([sqlManager tableExists:[TTCacheItemRef tableName]]) {
+  if ([sqlManager tableExists:[JSCacheItemRef tableName]]) {
     [sqlManager executeUpdateSQL:[NSString stringWithFormat:@"delete from %@ where cate_name = '%@'",
-                                                             [TTCacheItemRef tableName], name]];
+                                                             [JSCacheItemRef tableName], name]];
   }
 
   // here, we don't delete records in TTCacheItem table, it always there
@@ -146,19 +146,19 @@
 
 #pragma mark TTDataCacheService
 
-@implementation TTDataCacheService{
+@implementation JSDataCacheService{
   // [cateName -> TTCacheCategory]
   NSMutableDictionary *underlineCache;
-  TTCacheItemPool *itemPool;
+  JSCacheItemPool *itemPool;
   SQLiteInstanceManager *sqlManager;
 }
-SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
+SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
 
 - (id)init{
   self = [super init];
   if (self) {
     underlineCache = [NSMutableDictionary new];
-    itemPool = [TTCacheItemPool sharedInstance];
+    itemPool = [JSCacheItemPool sharedInstance];
     sqlManager = [SQLiteInstanceManager sharedManager];
 
       [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cleanCacheOnly)
@@ -174,14 +174,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
   [self cleanCache:NO];
 }
 
--(TTCacheCategory*)findCategoryInDB:(NSString*)cateName{
-  TTCacheCategory *cate = (TTCacheCategory*)[TTCacheCategory findFirstByCriteria:@"where name = '%@'", cateName];
+-(JSCacheCategory*)findCategoryInDB:(NSString*)cateName{
+  JSCacheCategory *cate = (JSCacheCategory*)[JSCacheCategory findFirstByCriteria:@"where name = '%@'", cateName];
   
   if (!cate) return nil;
   
   // load data related to cate
-  NSArray *refs =  [TTCacheItemRef findByCriteria:@"where cate_name = '%@' ",cateName];
-    for (TTCacheItemRef *ref in refs) {
+  NSArray *refs =  [JSCacheItemRef findByCriteria:@"where cate_name = '%@' ",cateName];
+    for (JSCacheItemRef *ref in refs) {
         [cate addItem: [itemPool getItemOfEntityId:ref.entityId]];
     }
   
@@ -192,7 +192,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
 
 -(NSTimeInterval)getRefreshTime:(NSString*)cateName{
   // find in cache
-  TTCacheCategory *cate = underlineCache[cateName];
+  JSCacheCategory *cate = underlineCache[cateName];
   
   if (cate) {
     return cate.refreshTimestamp;
@@ -204,17 +204,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
   return cate.refreshTimestamp;
 }
 
--(TTCachedData*)getAndRefreshSingleCachedData:(NSString*)cateName entityId:(NSString*)entityId
-                               cacheRefresher:(void (^)(TTCacheRefresher *refresher))refreshBlock
+-(JSCachedData*)getAndRefreshSingleCachedData:(NSString*)cateName entityId:(NSString*)entityId
+                               cacheRefresher:(void (^)(JSCacheRefresher *refresher))refreshBlock
                      refreshIntervalInSeconds:(NSTimeInterval)interval{
   
   // find in cache then DB
-  TTCachedData *data = [self getCachedDataOfEntityId:entityId];
+  JSCachedData *data = [self getCachedDataOfEntityId:entityId];
   
   if (data) {
     // check whether we need to update data in DB
     if ([[NSDate date] timeIntervalSince1970] - data.refreshTime > interval) {
-      TTCacheRefresher *refresher = [[[TTCacheRefresher alloc] initWithUnderlineCache:underlineCache
+      JSCacheRefresher *refresher = [[[JSCacheRefresher alloc] initWithUnderlineCache:underlineCache
                                                                              cateName:cateName
                                                                        entityIdGetter:^NSString *(NSDictionary *data) {
                                                                          return entityId;
@@ -231,16 +231,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
   return nil;
 }
 
--(NSArray*)getAndRefreshCachedData:(NSString*)cateName cacheRefresher:(void (^)(TTCacheRefresher *refresher))refreshBlock
+-(NSArray*)getAndRefreshCachedData:(NSString*)cateName cacheRefresher:(void (^)(JSCacheRefresher *refresher))refreshBlock
                     entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter refreshIntervalInSeconds:(NSTimeInterval)interval{
-  TTCacheCategory *cate = underlineCache[cateName];
+  JSCacheCategory *cate = underlineCache[cateName];
   
   // find in cache
 
   if (cate) {
     // check whether we need to update data in DB
     if ([[NSDate date] timeIntervalSince1970] - cate.refreshTimestamp > interval) {
-      TTCacheRefresher *refresher = [[[TTCacheRefresher alloc] initWithUnderlineCache:underlineCache
+      JSCacheRefresher *refresher = [[[JSCacheRefresher alloc] initWithUnderlineCache:underlineCache
                                                                              cateName:cateName
                                                                        entityIdGetter:entityIdGetter] autorelease];
       refreshBlock(refresher); // update cache/DB
@@ -259,7 +259,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
   
   // if it is't in DB
   if (!cate) {
-    TTCacheRefresher *refresher = [[[TTCacheRefresher alloc] initWithUnderlineCache:underlineCache
+    JSCacheRefresher *refresher = [[[JSCacheRefresher alloc] initWithUnderlineCache:underlineCache
                                                                            cateName:cateName
                                                                      entityIdGetter:entityIdGetter] autorelease];
     refreshBlock(refresher); // update cache/DB
@@ -277,7 +277,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
 
   // check whether we need to update data in DB
   if ([[NSDate date] timeIntervalSince1970] - cate.refreshTimestamp > interval) {
-    TTCacheRefresher *refresher = [[[TTCacheRefresher alloc] initWithUnderlineCache:underlineCache
+    JSCacheRefresher *refresher = [[[JSCacheRefresher alloc] initWithUnderlineCache:underlineCache
                                                                            cateName:cateName
                                                                      entityIdGetter:entityIdGetter] autorelease];
     refreshBlock(refresher); // update cache/DB
@@ -288,7 +288,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
 }
 
 -(NSArray*)getCachedData:(NSString*)cateName{
-  TTCacheCategory *cate = underlineCache[cateName];
+  JSCacheCategory *cate = underlineCache[cateName];
   
   // data is in cache
   return [cate getRawDataList];
@@ -305,17 +305,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
   return [cate getRawDataList];
 }
 
--(TTCachedData*)getCachedDataOfEntityId:(NSString*)entityId{
-  TTCacheItem *item = [itemPool getItemOfEntityId:entityId];
-  return [[[TTCachedData alloc] initWithData:item.data refreshTime:item.refreshTimestamp] autorelease];
+-(JSCachedData*)getCachedDataOfEntityId:(NSString*)entityId{
+  JSCacheItem *item = [itemPool getItemOfEntityId:entityId];
+  return [[[JSCachedData alloc] initWithData:item.data refreshTime:item.refreshTimestamp] autorelease];
 }
 
 -(NSDictionary*)getCachedData:(NSString*)cateName entityId:(NSString*)entityId{
-  TTCacheCategory *cate = underlineCache[cateName];
+  JSCacheCategory *cate = underlineCache[cateName];
   
   // data is in cache
   if (cate) {
-      for (TTCacheItem *item in [cate cachedItems]) {
+      for (JSCacheItem *item in [cate cachedItems]) {
           if ([item.entityId isEqualToString:entityId])
               return item.data;
       }
@@ -323,13 +323,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
   
   // isn't in cache, find in DB
   
-  cate = (TTCacheCategory*)[TTCacheCategory findFirstByCriteria:@"where name = '%@'", cateName];
+  cate = (JSCacheCategory*)[JSCacheCategory findFirstByCriteria:@"where name = '%@'", cateName];
   
   // category not in DB, return nil
   
   if (!cate) return nil;
   
-  TTCacheItem *item = [itemPool getItemOfEntityId:entityId];
+  JSCacheItem *item = [itemPool getItemOfEntityId:entityId];
   
   // item not in DB, return nil
 
@@ -347,7 +347,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
 
 -(void)addSingleDataToCache:(NSString*)cateName entityId:(NSString*)entityId
                        data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB{
-  TTCacheRefresher *refresher = [[[TTCacheRefresher alloc] initWithUnderlineCache:underlineCache
+  JSCacheRefresher *refresher = [[[JSCacheRefresher alloc] initWithUnderlineCache:underlineCache
                                                                          cateName:cateName
                                                                    entityIdGetter:^NSString *(NSDictionary *data) {
                                                                      return entityId;
@@ -357,7 +357,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
 
 -(void)insertSingleDataToCache:(NSString*)cateName entityId:(NSString*)entityId atIndex:(NSUInteger)index
                           data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB{
-  TTCacheCategory *cate = underlineCache[cateName];
+  JSCacheCategory *cate = underlineCache[cateName];
   if (cate) {
     [cate addItemFromRawData:data entityId:entityId atIndex:index];
     [self updateCachedData:entityId data:data needSyncToDB:needSyncToDB];
@@ -367,7 +367,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
 #pragma mark update
 
 -(void)updateCachedDataOnly:(NSString*)cateName dataList:(NSArray*)dataList entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter{
-  TTCacheCategory *cate = underlineCache[cateName];
+  JSCacheCategory *cate = underlineCache[cateName];
   if (cate) {
     [cate removeAllItems];
     
@@ -381,7 +381,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
 }
 
 -(void)updateCachedData:(NSString*)entityId data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB{
-  TTCacheItem *item = [itemPool getItemOfEntityId:entityId];
+  JSCacheItem *item = [itemPool getItemOfEntityId:entityId];
   [itemPool addOrUpdateItem:item data:data needSyncToDB:needSyncToDB];
 }
 
@@ -404,9 +404,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
   // clean DB
   // TODO there maybe a bug: if someone is inserting the DB, and this method is called in memory_warning, it will crash!
   [sqlManager doInTransactionAsync:^{
-    [self cleanDBTable:[TTCacheCategory tableName]];
-    [self cleanDBTable:[TTCacheItemRef tableName]];
-    [self cleanDBTable:[TTCacheItem tableName]];
+    [self cleanDBTable:[JSCacheCategory tableName]];
+    [self cleanDBTable:[JSCacheItemRef tableName]];
+    [self cleanDBTable:[JSCacheItem tableName]];
   }
                          didFinish:nil];
 }
@@ -421,10 +421,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
 
   [sqlManager doInTransactionAsync:^{
     [sqlManager executeUpdateSQL:[NSString stringWithFormat:@"delete from %@ where name = '%@' ",
-                                  [TTCacheCategory tableName], cateName]];
+                                  [JSCacheCategory tableName], cateName]];
     
     [sqlManager executeUpdateSQL:[NSString stringWithFormat:@"delete from %@ where cate_name = '%@' ",
-                                  [TTCacheItemRef tableName], cateName]];    
+                                  [JSCacheItemRef tableName], cateName]];    
   }
                          didFinish:nil];
 
@@ -433,13 +433,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
 }
 
 -(void)deleteCachedDataOnly:(NSString*)cateName entityId:(NSString*)entityId{
-  TTCacheCategory *cate = underlineCache[cateName];
+  JSCacheCategory *cate = underlineCache[cateName];
   [cate removeItemByEntityId:entityId];
 }
 
 -(void)deleteCachedDataInAllCategory:(NSString*)entityId needSyncToDB:(BOOL)needSyncToDB{
   // delete item in all category    
-    for (TTCacheCategory *cate in [underlineCache allValues]) {
+    for (JSCacheCategory *cate in [underlineCache allValues]) {
         [cate removeItemByEntityId:entityId];
     }
   
@@ -451,7 +451,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TTDataCacheService);
   // delete from DB
 
   [sqlManager executeUpdateSQL:[NSString stringWithFormat:@"delete from %@ where entity_id = '%@'",
-                                                           [TTCacheItemRef tableName],entityId]];
+                                                           [JSCacheItemRef tableName],entityId]];
 }
 
 

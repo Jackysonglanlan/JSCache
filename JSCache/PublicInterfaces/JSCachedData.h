@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TTCachedData : NSObject
+@interface JSCachedData : NSObject
 
 @property(nonatomic,readonly) NSTimeInterval refreshTime;
 

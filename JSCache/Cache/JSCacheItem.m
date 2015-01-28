@@ -6,11 +6,11 @@
 //  Copyright (c) 2013年 tiantian. All rights reserved.
 //
 
-#import "TTCacheItem.h"
+#import "JSCacheItem.h"
 
 #import "JSShortHand.h"
 
-@implementation TTCacheItem
+@implementation JSCacheItem
 @synthesize origJsonData,entityId,data,refreshTimestamp;
 
 DECLARE_PROPERTIES(
@@ -23,8 +23,8 @@ DECLARE_PROPERTIES(
   return @[@"data"];
 }
 
-+(TTCacheItem*)findItemOfEntityId:(NSString*)entityId{
-  return (TTCacheItem*)[TTCacheItem findFirstByCriteria:@"where entity_id = '%@'",entityId];
++(JSCacheItem*)findItemOfEntityId:(NSString*)entityId{
+  return (JSCacheItem*)[JSCacheItem findFirstByCriteria:@"where entity_id = '%@'",entityId];
 }
 
 - (void)dealloc{

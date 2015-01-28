@@ -6,11 +6,11 @@
 //  Copyright (c) 2013年 tiantian. All rights reserved.
 //
 
-#import "TTCacheItemRef.h"
+#import "JSCacheItemRef.h"
 
 #import "JSShortHand.h"
 
-@implementation TTCacheItemRef
+@implementation JSCacheItemRef
 @synthesize cateName, entityId;
 
 DECLARE_PROPERTIES(

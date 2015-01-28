@@ -6,11 +6,11 @@
 //  Copyright (c) 2013年 tiantian. All rights reserved.
 //
 
-#import "TTCachedData.h"
+#import "JSCachedData.h"
 
 #import "JSShortHand.h"
 
-@implementation TTCachedData
+@implementation JSCachedData
 @synthesize refreshTime, data;
 
 - (id)initWithData:(NSDictionary *)d refreshTime:(NSTimeInterval)time{

@@ -7,9 +7,9 @@
 //
 
 #import "SQLitePersistentObject.h"
-#import "TTCacheItem.h"
+#import "JSCacheItem.h"
 
-@interface TTCacheCategory : SQLitePersistentObject
+@interface JSCacheCategory : SQLitePersistentObject
 
 @property(nonatomic,retain) NSString *name;
 @property(nonatomic,assign) NSTimeInterval refreshTimestamp;// seconds since 1970
@@ -28,7 +28,7 @@
 -(void)addItemFromRawData:(NSDictionary*)rawData entityId:(NSString*)entityId atIndex:(NSUInteger)index;
 
 // Add item to cache is actually add a ref record
--(void)addItem:(TTCacheItem*)item;
+-(void)addItem:(JSCacheItem*)item;
 
 // Remove item is actually remove the ref record
 -(void)removeItemByEntityId:(NSString*)entityId;

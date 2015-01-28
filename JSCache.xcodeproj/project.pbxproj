@@ -71,30 +71,29 @@
 		849CCDB41A778D37008D3798 /* UIImage-SQLitePersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCD851A778D37008D3798 /* UIImage-SQLitePersistence.m */; };
 		849CCDB51A778D37008D3798 /* UIImage-SQLitePersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCD851A778D37008D3798 /* UIImage-SQLitePersistence.m */; };
 		849CCDB71A778D4A008D3798 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 849CCDB61A778D4A008D3798 /* libsqlite3.0.dylib */; };
-		849CCDC51A778D8A008D3798 /* TTCacheCategory.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDB91A778D8A008D3798 /* TTCacheCategory.h */; };
-		849CCDC61A778D8A008D3798 /* TTCacheCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDBA1A778D8A008D3798 /* TTCacheCategory.m */; };
-		849CCDC71A778D8A008D3798 /* TTCacheCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDBA1A778D8A008D3798 /* TTCacheCategory.m */; };
-		849CCDCB1A778D8A008D3798 /* TTCacheItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDBD1A778D8A008D3798 /* TTCacheItem.h */; };
-		849CCDCC1A778D8A008D3798 /* TTCacheItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDBE1A778D8A008D3798 /* TTCacheItem.m */; };
-		849CCDCD1A778D8A008D3798 /* TTCacheItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDBE1A778D8A008D3798 /* TTCacheItem.m */; };
-		849CCDCE1A778D8A008D3798 /* TTCacheItemPool.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDBF1A778D8A008D3798 /* TTCacheItemPool.h */; };
-		849CCDCF1A778D8A008D3798 /* TTCacheItemPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC01A778D8A008D3798 /* TTCacheItemPool.m */; };
-		849CCDD01A778D8A008D3798 /* TTCacheItemPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC01A778D8A008D3798 /* TTCacheItemPool.m */; };
-		849CCDD11A778D8A008D3798 /* TTCacheItemRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDC11A778D8A008D3798 /* TTCacheItemRef.h */; };
-		849CCDD21A778D8A008D3798 /* TTCacheItemRef.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC21A778D8A008D3798 /* TTCacheItemRef.m */; };
-		849CCDD31A778D8A008D3798 /* TTCacheItemRef.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC21A778D8A008D3798 /* TTCacheItemRef.m */; };
+		849CCDC51A778D8A008D3798 /* JSCacheCategory.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDB91A778D8A008D3798 /* JSCacheCategory.h */; };
+		849CCDC61A778D8A008D3798 /* JSCacheCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDBA1A778D8A008D3798 /* JSCacheCategory.m */; };
+		849CCDC71A778D8A008D3798 /* JSCacheCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDBA1A778D8A008D3798 /* JSCacheCategory.m */; };
+		849CCDCB1A778D8A008D3798 /* JSCacheItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDBD1A778D8A008D3798 /* JSCacheItem.h */; };
+		849CCDCC1A778D8A008D3798 /* JSCacheItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDBE1A778D8A008D3798 /* JSCacheItem.m */; };
+		849CCDCD1A778D8A008D3798 /* JSCacheItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDBE1A778D8A008D3798 /* JSCacheItem.m */; };
+		849CCDCE1A778D8A008D3798 /* JSCacheItemPool.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDBF1A778D8A008D3798 /* JSCacheItemPool.h */; };
+		849CCDCF1A778D8A008D3798 /* JSCacheItemPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC01A778D8A008D3798 /* JSCacheItemPool.m */; };
+		849CCDD01A778D8A008D3798 /* JSCacheItemPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC01A778D8A008D3798 /* JSCacheItemPool.m */; };
+		849CCDD11A778D8A008D3798 /* JSCacheItemRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDC11A778D8A008D3798 /* JSCacheItemRef.h */; };
+		849CCDD21A778D8A008D3798 /* JSCacheItemRef.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC21A778D8A008D3798 /* JSCacheItemRef.m */; };
+		849CCDD31A778D8A008D3798 /* JSCacheItemRef.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC21A778D8A008D3798 /* JSCacheItemRef.m */; };
 		849CCDDA1A778DBA008D3798 /* JSShortHand.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDD81A778DBA008D3798 /* JSShortHand.h */; };
 		849CCDDF1A778E3F008D3798 /* AbstractTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDDD1A778E3F008D3798 /* AbstractTests.m */; };
-		849CCDE01A778E3F008D3798 /* TestComTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDDE1A778E3F008D3798 /* TestComTests.m */; };
 		849CCDE31A778E55008D3798 /* OCHamcrestIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849CCDE11A778E55008D3798 /* OCHamcrestIOS.framework */; };
 		849CCDE41A778E55008D3798 /* OCMockitoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849CCDE21A778E55008D3798 /* OCMockitoIOS.framework */; };
 		849CCDE61A77911B008D3798 /* SynthesizeSingleton.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDE51A77911B008D3798 /* SynthesizeSingleton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		849CCDEB1A77915E008D3798 /* TTCachedData.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDE71A77915E008D3798 /* TTCachedData.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		849CCDEC1A77915E008D3798 /* TTCachedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDE81A77915E008D3798 /* TTCachedData.m */; };
-		849CCDED1A77915E008D3798 /* TTCachedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDE81A77915E008D3798 /* TTCachedData.m */; };
-		849CCDEE1A77915E008D3798 /* TTDataCacheService.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDE91A77915E008D3798 /* TTDataCacheService.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		849CCDEF1A77915E008D3798 /* TTDataCacheService.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDEA1A77915E008D3798 /* TTDataCacheService.m */; };
-		849CCDF01A77915E008D3798 /* TTDataCacheService.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDEA1A77915E008D3798 /* TTDataCacheService.m */; };
+		849CCDEB1A77915E008D3798 /* JSCachedData.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDE71A77915E008D3798 /* JSCachedData.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		849CCDEC1A77915E008D3798 /* JSCachedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDE81A77915E008D3798 /* JSCachedData.m */; };
+		849CCDED1A77915E008D3798 /* JSCachedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDE81A77915E008D3798 /* JSCachedData.m */; };
+		849CCDEE1A77915E008D3798 /* JSDataCacheService.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDE91A77915E008D3798 /* JSDataCacheService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		849CCDEF1A77915E008D3798 /* JSDataCacheService.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDEA1A77915E008D3798 /* JSDataCacheService.m */; };
+		849CCDF01A77915E008D3798 /* JSDataCacheService.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDEA1A77915E008D3798 /* JSDataCacheService.m */; };
 		849CCDF11A77921D008D3798 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8478E7341A7788D90093DD99 /* UIKit.framework */; };
 		849CCDF21A779225008D3798 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 849CCDB61A778D4A008D3798 /* libsqlite3.0.dylib */; };
 		849CCDF31A77922D008D3798 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8478E7301A7788D90093DD99 /* Foundation.framework */; };
@@ -170,25 +169,24 @@
 		849CCD841A778D37008D3798 /* UIImage-SQLitePersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage-SQLitePersistence.h"; sourceTree = "<group>"; };
 		849CCD851A778D37008D3798 /* UIImage-SQLitePersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage-SQLitePersistence.m"; sourceTree = "<group>"; };
 		849CCDB61A778D4A008D3798 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		849CCDB91A778D8A008D3798 /* TTCacheCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCacheCategory.h; sourceTree = "<group>"; };
-		849CCDBA1A778D8A008D3798 /* TTCacheCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCacheCategory.m; sourceTree = "<group>"; };
-		849CCDBD1A778D8A008D3798 /* TTCacheItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCacheItem.h; sourceTree = "<group>"; };
-		849CCDBE1A778D8A008D3798 /* TTCacheItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCacheItem.m; sourceTree = "<group>"; };
-		849CCDBF1A778D8A008D3798 /* TTCacheItemPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCacheItemPool.h; sourceTree = "<group>"; };
-		849CCDC01A778D8A008D3798 /* TTCacheItemPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCacheItemPool.m; sourceTree = "<group>"; };
-		849CCDC11A778D8A008D3798 /* TTCacheItemRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCacheItemRef.h; sourceTree = "<group>"; };
-		849CCDC21A778D8A008D3798 /* TTCacheItemRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCacheItemRef.m; sourceTree = "<group>"; };
+		849CCDB91A778D8A008D3798 /* JSCacheCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCacheCategory.h; sourceTree = "<group>"; };
+		849CCDBA1A778D8A008D3798 /* JSCacheCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCacheCategory.m; sourceTree = "<group>"; };
+		849CCDBD1A778D8A008D3798 /* JSCacheItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCacheItem.h; sourceTree = "<group>"; };
+		849CCDBE1A778D8A008D3798 /* JSCacheItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCacheItem.m; sourceTree = "<group>"; };
+		849CCDBF1A778D8A008D3798 /* JSCacheItemPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCacheItemPool.h; sourceTree = "<group>"; };
+		849CCDC01A778D8A008D3798 /* JSCacheItemPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCacheItemPool.m; sourceTree = "<group>"; };
+		849CCDC11A778D8A008D3798 /* JSCacheItemRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCacheItemRef.h; sourceTree = "<group>"; };
+		849CCDC21A778D8A008D3798 /* JSCacheItemRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCacheItemRef.m; sourceTree = "<group>"; };
 		849CCDD81A778DBA008D3798 /* JSShortHand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSShortHand.h; sourceTree = "<group>"; };
 		849CCDDC1A778E3F008D3798 /* AbstractTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractTests.h; sourceTree = "<group>"; };
 		849CCDDD1A778E3F008D3798 /* AbstractTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractTests.m; sourceTree = "<group>"; };
-		849CCDDE1A778E3F008D3798 /* TestComTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestComTests.m; sourceTree = "<group>"; };
 		849CCDE11A778E55008D3798 /* OCHamcrestIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCHamcrestIOS.framework; sourceTree = "<group>"; };
 		849CCDE21A778E55008D3798 /* OCMockitoIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCMockitoIOS.framework; sourceTree = "<group>"; };
 		849CCDE51A77911B008D3798 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
-		849CCDE71A77915E008D3798 /* TTCachedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCachedData.h; sourceTree = "<group>"; };
-		849CCDE81A77915E008D3798 /* TTCachedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCachedData.m; sourceTree = "<group>"; };
-		849CCDE91A77915E008D3798 /* TTDataCacheService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTDataCacheService.h; sourceTree = "<group>"; };
-		849CCDEA1A77915E008D3798 /* TTDataCacheService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTDataCacheService.m; sourceTree = "<group>"; };
+		849CCDE71A77915E008D3798 /* JSCachedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCachedData.h; sourceTree = "<group>"; };
+		849CCDE81A77915E008D3798 /* JSCachedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCachedData.m; sourceTree = "<group>"; };
+		849CCDE91A77915E008D3798 /* JSDataCacheService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSDataCacheService.h; sourceTree = "<group>"; };
+		849CCDEA1A77915E008D3798 /* JSDataCacheService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSDataCacheService.m; sourceTree = "<group>"; };
 		849CCDF61A779354008D3798 /* JSCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCache.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -299,7 +297,6 @@
 				8478E75B1A7788D90093DD99 /* JSCacheTests.m */,
 				849CCDDC1A778E3F008D3798 /* AbstractTests.h */,
 				849CCDDD1A778E3F008D3798 /* AbstractTests.m */,
-				849CCDDE1A778E3F008D3798 /* TestComTests.m */,
 				8478E7561A7788D90093DD99 /* Supporting Files */,
 			);
 			path = JSCacheTests;
@@ -339,10 +336,10 @@
 			children = (
 				849CCDF61A779354008D3798 /* JSCache.h */,
 				849CCDE51A77911B008D3798 /* SynthesizeSingleton.h */,
-				849CCDE91A77915E008D3798 /* TTDataCacheService.h */,
-				849CCDEA1A77915E008D3798 /* TTDataCacheService.m */,
-				849CCDE71A77915E008D3798 /* TTCachedData.h */,
-				849CCDE81A77915E008D3798 /* TTCachedData.m */,
+				849CCDE91A77915E008D3798 /* JSDataCacheService.h */,
+				849CCDEA1A77915E008D3798 /* JSDataCacheService.m */,
+				849CCDE71A77915E008D3798 /* JSCachedData.h */,
+				849CCDE81A77915E008D3798 /* JSCachedData.m */,
 			);
 			path = PublicInterfaces;
 			sourceTree = "<group>";
@@ -397,14 +394,14 @@
 		849CCDB81A778D8A008D3798 /* Cache */ = {
 			isa = PBXGroup;
 			children = (
-				849CCDB91A778D8A008D3798 /* TTCacheCategory.h */,
-				849CCDBA1A778D8A008D3798 /* TTCacheCategory.m */,
-				849CCDBD1A778D8A008D3798 /* TTCacheItem.h */,
-				849CCDBE1A778D8A008D3798 /* TTCacheItem.m */,
-				849CCDBF1A778D8A008D3798 /* TTCacheItemPool.h */,
-				849CCDC01A778D8A008D3798 /* TTCacheItemPool.m */,
-				849CCDC11A778D8A008D3798 /* TTCacheItemRef.h */,
-				849CCDC21A778D8A008D3798 /* TTCacheItemRef.m */,
+				849CCDB91A778D8A008D3798 /* JSCacheCategory.h */,
+				849CCDBA1A778D8A008D3798 /* JSCacheCategory.m */,
+				849CCDBD1A778D8A008D3798 /* JSCacheItem.h */,
+				849CCDBE1A778D8A008D3798 /* JSCacheItem.m */,
+				849CCDBF1A778D8A008D3798 /* JSCacheItemPool.h */,
+				849CCDC01A778D8A008D3798 /* JSCacheItemPool.m */,
+				849CCDC11A778D8A008D3798 /* JSCacheItemRef.h */,
+				849CCDC21A778D8A008D3798 /* JSCacheItemRef.m */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -425,15 +422,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				849CCDF71A77939F008D3798 /* JSCache.h in Headers */,
-				849CCDEE1A77915E008D3798 /* TTDataCacheService.h in Headers */,
+				849CCDEE1A77915E008D3798 /* JSDataCacheService.h in Headers */,
 				849CCDE61A77911B008D3798 /* SynthesizeSingleton.h in Headers */,
-				849CCDEB1A77915E008D3798 /* TTCachedData.h in Headers */,
+				849CCDEB1A77915E008D3798 /* JSCachedData.h in Headers */,
 				849CCDAA1A778D37008D3798 /* SQLiteInstanceManager.h in Headers */,
 				849CCDAD1A778D37008D3798 /* SQLitePersistentObject.h in Headers */,
-				849CCDCB1A778D8A008D3798 /* TTCacheItem.h in Headers */,
-				849CCDC51A778D8A008D3798 /* TTCacheCategory.h in Headers */,
+				849CCDCB1A778D8A008D3798 /* JSCacheItem.h in Headers */,
+				849CCDC51A778D8A008D3798 /* JSCacheCategory.h in Headers */,
 				849CCD951A778D37008D3798 /* NSObject-ClassName.h in Headers */,
-				849CCDD11A778D8A008D3798 /* TTCacheItemRef.h in Headers */,
+				849CCDD11A778D8A008D3798 /* JSCacheItemRef.h in Headers */,
 				849CCD921A778D37008D3798 /* NSNumber-SQLitePersistence.h in Headers */,
 				849CCD8F1A778D37008D3798 /* NSMutableData-SQLitePersistence.h in Headers */,
 				849CCD861A778D37008D3798 /* NSData-SQLitePersistence.h in Headers */,
@@ -443,7 +440,7 @@
 				849CCD891A778D37008D3798 /* NSDate-SQLitePersistence.h in Headers */,
 				849CCD9B1A778D37008D3798 /* NSObject-SQLitePersistence.h in Headers */,
 				849CCD9E1A778D37008D3798 /* NSString-NumberStuff.h in Headers */,
-				849CCDCE1A778D8A008D3798 /* TTCacheItemPool.h in Headers */,
+				849CCDCE1A778D8A008D3798 /* JSCacheItemPool.h in Headers */,
 				849CCDB01A778D37008D3798 /* UIColor-SQLitePersistentObject.h in Headers */,
 				849CCDA41A778D37008D3798 /* NSString-SQLitePersistence.h in Headers */,
 				849CCDDA1A778DBA008D3798 /* JSShortHand.h in Headers */,
@@ -581,21 +578,21 @@
 				8478E7471A7788D90093DD99 /* ViewController.m in Sources */,
 				849CCD901A778D37008D3798 /* NSMutableData-SQLitePersistence.m in Sources */,
 				849CCDAB1A778D37008D3798 /* SQLiteInstanceManager.m in Sources */,
-				849CCDCC1A778D8A008D3798 /* TTCacheItem.m in Sources */,
+				849CCDCC1A778D8A008D3798 /* JSCacheItem.m in Sources */,
 				849CCD991A778D37008D3798 /* NSObject-MissingKV.m in Sources */,
 				8478E7411A7788D90093DD99 /* AppDelegate.m in Sources */,
 				849CCD961A778D37008D3798 /* NSObject-ClassName.m in Sources */,
-				849CCDD21A778D8A008D3798 /* TTCacheItemRef.m in Sources */,
-				849CCDEC1A77915E008D3798 /* TTCachedData.m in Sources */,
+				849CCDD21A778D8A008D3798 /* JSCacheItemRef.m in Sources */,
+				849CCDEC1A77915E008D3798 /* JSCachedData.m in Sources */,
 				849CCDAE1A778D37008D3798 /* SQLitePersistentObject.m in Sources */,
-				849CCDC61A778D8A008D3798 /* TTCacheCategory.m in Sources */,
+				849CCDC61A778D8A008D3798 /* JSCacheCategory.m in Sources */,
 				8478E73D1A7788D90093DD99 /* main.m in Sources */,
 				849CCD931A778D37008D3798 /* NSNumber-SQLitePersistence.m in Sources */,
 				849CCD9C1A778D37008D3798 /* NSObject-SQLitePersistence.m in Sources */,
-				849CCDCF1A778D8A008D3798 /* TTCacheItemPool.m in Sources */,
+				849CCDCF1A778D8A008D3798 /* JSCacheItemPool.m in Sources */,
 				849CCD8A1A778D37008D3798 /* NSDate-SQLitePersistence.m in Sources */,
 				849CCDA21A778D37008D3798 /* NSString-SQLiteColumnName.m in Sources */,
-				849CCDEF1A77915E008D3798 /* TTDataCacheService.m in Sources */,
+				849CCDEF1A77915E008D3798 /* JSDataCacheService.m in Sources */,
 				849CCD8D1A778D37008D3798 /* NSMutableArray-MultipleSort.m in Sources */,
 				849CCDA81A778D37008D3798 /* NSString-UppercaseFirst.m in Sources */,
 				849CCDB11A778D37008D3798 /* UIColor-SQLitePersistentObject.m in Sources */,
@@ -607,7 +604,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				849CCDE01A778E3F008D3798 /* TestComTests.m in Sources */,
 				8478E75C1A7788D90093DD99 /* JSCacheTests.m in Sources */,
 				849CCDDF1A778E3F008D3798 /* AbstractTests.m in Sources */,
 			);
@@ -631,12 +627,12 @@
 				849CCD8B1A778D37008D3798 /* NSDate-SQLitePersistence.m in Sources */,
 				849CCDA01A778D37008D3798 /* NSString-NumberStuff.m in Sources */,
 				849CCDA31A778D37008D3798 /* NSString-SQLiteColumnName.m in Sources */,
-				849CCDCD1A778D8A008D3798 /* TTCacheItem.m in Sources */,
-				849CCDD01A778D8A008D3798 /* TTCacheItemPool.m in Sources */,
-				849CCDD31A778D8A008D3798 /* TTCacheItemRef.m in Sources */,
-				849CCDED1A77915E008D3798 /* TTCachedData.m in Sources */,
-				849CCDC71A778D8A008D3798 /* TTCacheCategory.m in Sources */,
-				849CCDF01A77915E008D3798 /* TTDataCacheService.m in Sources */,
+				849CCDCD1A778D8A008D3798 /* JSCacheItem.m in Sources */,
+				849CCDD01A778D8A008D3798 /* JSCacheItemPool.m in Sources */,
+				849CCDD31A778D8A008D3798 /* JSCacheItemRef.m in Sources */,
+				849CCDED1A77915E008D3798 /* JSCachedData.m in Sources */,
+				849CCDC71A778D8A008D3798 /* JSCacheCategory.m in Sources */,
+				849CCDF01A77915E008D3798 /* JSDataCacheService.m in Sources */,
 				849CCD8E1A778D37008D3798 /* NSMutableArray-MultipleSort.m in Sources */,
 				849CCDB21A778D37008D3798 /* UIColor-SQLitePersistentObject.m in Sources */,
 				849CCD9A1A778D37008D3798 /* NSObject-MissingKV.m in Sources */,
@@ -924,6 +920,7 @@
 				849CCD611A778A64008D3798 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

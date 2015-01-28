@@ -6,19 +6,19 @@
 //  Copyright (c) 2013年 tiantian. All rights reserved.
 //
 
-#import "TTCacheCategory.h"
-#import "TTCacheItemRef.h"
-#import "TTCacheItem.h"
-#import "TTCacheItemPool.h"
+#import "JSCacheCategory.h"
+#import "JSCacheItemRef.h"
+#import "JSCacheItem.h"
+#import "JSCacheItemPool.h"
 
 #import "JSShortHand.h"
 
-@implementation TTCacheCategory{  
+@implementation JSCacheCategory{  
   // array of TTCacheItemRef
   NSMutableArray *itemRefs;
   
   // pool
-  TTCacheItemPool *itemPool;
+  JSCacheItemPool *itemPool;
 }
 @synthesize name,refreshTimestamp;
 
@@ -37,20 +37,20 @@ DECLARE_PROPERTIES(
   self = [super init];
   if (self) {
     itemRefs = [NSMutableArray new];
-    itemPool = [TTCacheItemPool sharedInstance];
+    itemPool = [JSCacheItemPool sharedInstance];
   }
   return self;
 }
 
 #pragma mark private
 
--(void)addItem:(TTCacheItem*)item withData:(NSDictionary*)data atIndex:(NSUInteger)index{
+-(void)addItem:(JSCacheItem*)item withData:(NSDictionary*)data atIndex:(NSUInteger)index{
   [self addItem:item atIndex:index];
   [itemPool addOrUpdateItem:item data:data needSyncToDB:NO];// no need to sync to DB
 }
 
--(void)addItem:(TTCacheItem *)item atIndex:(NSUInteger)index{
-  TTCacheItemRef *ref = [TTCacheItemRef new];
+-(void)addItem:(JSCacheItem *)item atIndex:(NSUInteger)index{
+  JSCacheItemRef *ref = [JSCacheItemRef new];
   ref.cateName = name;
   ref.entityId = item.entityId;
   [itemRefs insertObject:ref atIndex:index];
@@ -67,7 +67,7 @@ DECLARE_PROPERTIES(
   NSMutableArray *idList = [NSMutableArray arrayWithCapacity:itemRefs.count];
 
   // save refs
-    for (TTCacheItemRef *ref in itemRefs) {
+    for (JSCacheItemRef *ref in itemRefs) {
         [idList addObject:ref.entityId];
         [ref save];
     }
@@ -82,7 +82,7 @@ DECLARE_PROPERTIES(
 
 -(void)addItemFromRawData:(NSDictionary*)rawData entityId:(NSString*)entityId atIndex:(NSUInteger)index{
   // find item in pool first
-  TTCacheItem *item = [itemPool getItemOfEntityId:entityId];
+  JSCacheItem *item = [itemPool getItemOfEntityId:entityId];
   
   // already in pool, use it
   if (item) {
@@ -92,19 +92,19 @@ DECLARE_PROPERTIES(
   
   // not in pool, create a new one
   
-  item = [TTCacheItem new];
+  item = [JSCacheItem new];
   item.entityId = entityId;
   [self addItem:item withData:rawData atIndex:index];
   [item release];
 }
 
--(void)addItem:(TTCacheItem*)item{
+-(void)addItem:(JSCacheItem*)item{
   [self addItem:item atIndex:itemRefs.count];
 }
 
 -(void)removeItemByEntityId:(NSString*)entityId{
-    TTCacheItemRef *r = nil;
-    for (TTCacheItemRef *ref in itemRefs) {
+    JSCacheItemRef *r = nil;
+    for (JSCacheItemRef *ref in itemRefs) {
         if ([ref.entityId isEqualToString:entityId]){
             r = ref;
             break;
@@ -124,7 +124,7 @@ DECLARE_PROPERTIES(
     
     NSMutableArray *rawDataList = [NSMutableArray arrayWithCapacity:cachedItems.count];
     
-    for (TTCacheItem *item in cachedItems) {
+    for (JSCacheItem *item in cachedItems) {
         NSDictionary *data = item.data;// this is a lazy operation
         if (data) {
             [rawDataList addObject:data];

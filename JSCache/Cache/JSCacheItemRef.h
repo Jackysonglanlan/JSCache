@@ -8,7 +8,7 @@
 
 #import "SQLitePersistentObject.h"
 
-@interface TTCacheItemRef : SQLitePersistentObject
+@interface JSCacheItemRef : SQLitePersistentObject
 
 @property(nonatomic,retain) NSString *cateName;
 @property(nonatomic,retain) NSString *entityId;
