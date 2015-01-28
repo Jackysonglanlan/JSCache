@@ -131,13 +131,13 @@
     [[JSCacheCategory findFirstByCriteria:@"where name = '%@'",name] deleteObject];
   }
 
-  // delete related records in TTCacheItemRef table
-  if ([sqlManager tableExists:[JSCacheItemRef tableName]]) {
+  // delete related records in JSCacheCateItem table
+  if ([sqlManager tableExists:[JSCacheCateItem tableName]]) {
     [sqlManager executeUpdateSQL:[NSString stringWithFormat:@"delete from %@ where cate_name = '%@'",
-                                                             [JSCacheItemRef tableName], name]];
+                                                             [JSCacheCateItem tableName], name]];
   }
 
-  // here, we don't delete records in TTCacheItem table, it always there
+  // here, we don't delete records in JSCacheItem table, it always there
 }
 
 @end
@@ -178,8 +178,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   if (!cate) return nil;
   
   // load data related to cate
-  NSArray *refs =  [JSCacheItemRef findByCriteria:@"where cate_name = '%@' ",cateName];
-    for (JSCacheItemRef *ref in refs) {
+  NSArray *refs =  [JSCacheCateItem findByCriteria:@"where cate_name = '%@' ",cateName];
+    for (JSCacheCateItem *ref in refs) {
         [cate addItem: [itemPool getItemOfEntityId:ref.entityId]];
     }
   
@@ -415,7 +415,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   // TODO there maybe a bug: if someone is inserting the DB, and this method is called in memory_warning, it will crash!
   [sqlManager doInTransactionAsync:^{
     [self cleanDBTable:[JSCacheCategory tableName]];
-    [self cleanDBTable:[JSCacheItemRef tableName]];
+    [self cleanDBTable:[JSCacheCateItem tableName]];
     [self cleanDBTable:[JSCacheItem tableName]];
   }
                          didFinish:nil];
@@ -434,7 +434,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
                                   [JSCacheCategory tableName], cateName]];
     
     [sqlManager executeUpdateSQL:[NSString stringWithFormat:@"delete from %@ where cate_name = '%@' ",
-                                  [JSCacheItemRef tableName], cateName]];    
+                                  [JSCacheCateItem tableName], cateName]];    
   }
                          didFinish:nil];
 
@@ -461,7 +461,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   // delete from DB
 
   [sqlManager executeUpdateSQL:[NSString stringWithFormat:@"delete from %@ where entity_id = '%@'",
-                                                           [JSCacheItemRef tableName],entityId]];
+                                                           [JSCacheCateItem tableName],entityId]];
 }
 
 

@@ -80,9 +80,9 @@
 		849CCDCE1A778D8A008D3798 /* JSCacheItemPool.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDBF1A778D8A008D3798 /* JSCacheItemPool.h */; };
 		849CCDCF1A778D8A008D3798 /* JSCacheItemPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC01A778D8A008D3798 /* JSCacheItemPool.m */; };
 		849CCDD01A778D8A008D3798 /* JSCacheItemPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC01A778D8A008D3798 /* JSCacheItemPool.m */; };
-		849CCDD11A778D8A008D3798 /* JSCacheItemRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDC11A778D8A008D3798 /* JSCacheItemRef.h */; };
-		849CCDD21A778D8A008D3798 /* JSCacheItemRef.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC21A778D8A008D3798 /* JSCacheItemRef.m */; };
-		849CCDD31A778D8A008D3798 /* JSCacheItemRef.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC21A778D8A008D3798 /* JSCacheItemRef.m */; };
+		849CCDD11A778D8A008D3798 /* JSCacheCateItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDC11A778D8A008D3798 /* JSCacheCateItem.h */; };
+		849CCDD21A778D8A008D3798 /* JSCacheCateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC21A778D8A008D3798 /* JSCacheCateItem.m */; };
+		849CCDD31A778D8A008D3798 /* JSCacheCateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDC21A778D8A008D3798 /* JSCacheCateItem.m */; };
 		849CCDDA1A778DBA008D3798 /* JSShortHand.h in Headers */ = {isa = PBXBuildFile; fileRef = 849CCDD81A778DBA008D3798 /* JSShortHand.h */; };
 		849CCDDF1A778E3F008D3798 /* AbstractTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 849CCDDD1A778E3F008D3798 /* AbstractTests.m */; };
 		849CCDE31A778E55008D3798 /* OCHamcrestIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849CCDE11A778E55008D3798 /* OCHamcrestIOS.framework */; };
@@ -175,8 +175,8 @@
 		849CCDBE1A778D8A008D3798 /* JSCacheItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCacheItem.m; sourceTree = "<group>"; };
 		849CCDBF1A778D8A008D3798 /* JSCacheItemPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCacheItemPool.h; sourceTree = "<group>"; };
 		849CCDC01A778D8A008D3798 /* JSCacheItemPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCacheItemPool.m; sourceTree = "<group>"; };
-		849CCDC11A778D8A008D3798 /* JSCacheItemRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCacheItemRef.h; sourceTree = "<group>"; };
-		849CCDC21A778D8A008D3798 /* JSCacheItemRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCacheItemRef.m; sourceTree = "<group>"; };
+		849CCDC11A778D8A008D3798 /* JSCacheCateItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCacheCateItem.h; sourceTree = "<group>"; };
+		849CCDC21A778D8A008D3798 /* JSCacheCateItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCacheCateItem.m; sourceTree = "<group>"; };
 		849CCDD81A778DBA008D3798 /* JSShortHand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSShortHand.h; sourceTree = "<group>"; };
 		849CCDDC1A778E3F008D3798 /* AbstractTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractTests.h; sourceTree = "<group>"; };
 		849CCDDD1A778E3F008D3798 /* AbstractTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractTests.m; sourceTree = "<group>"; };
@@ -400,8 +400,8 @@
 				849CCDBA1A778D8A008D3798 /* JSCacheCategory.m */,
 				849CCDBD1A778D8A008D3798 /* JSCacheItem.h */,
 				849CCDBE1A778D8A008D3798 /* JSCacheItem.m */,
-				849CCDC11A778D8A008D3798 /* JSCacheItemRef.h */,
-				849CCDC21A778D8A008D3798 /* JSCacheItemRef.m */,
+				849CCDC11A778D8A008D3798 /* JSCacheCateItem.h */,
+				849CCDC21A778D8A008D3798 /* JSCacheCateItem.m */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -430,7 +430,7 @@
 				849CCDCB1A778D8A008D3798 /* JSCacheItem.h in Headers */,
 				849CCDC51A778D8A008D3798 /* JSCacheCategory.h in Headers */,
 				849CCD951A778D37008D3798 /* NSObject-ClassName.h in Headers */,
-				849CCDD11A778D8A008D3798 /* JSCacheItemRef.h in Headers */,
+				849CCDD11A778D8A008D3798 /* JSCacheCateItem.h in Headers */,
 				849CCD921A778D37008D3798 /* NSNumber-SQLitePersistence.h in Headers */,
 				849CCD8F1A778D37008D3798 /* NSMutableData-SQLitePersistence.h in Headers */,
 				849CCD861A778D37008D3798 /* NSData-SQLitePersistence.h in Headers */,
@@ -582,7 +582,7 @@
 				849CCD991A778D37008D3798 /* NSObject-MissingKV.m in Sources */,
 				8478E7411A7788D90093DD99 /* AppDelegate.m in Sources */,
 				849CCD961A778D37008D3798 /* NSObject-ClassName.m in Sources */,
-				849CCDD21A778D8A008D3798 /* JSCacheItemRef.m in Sources */,
+				849CCDD21A778D8A008D3798 /* JSCacheCateItem.m in Sources */,
 				849CCDEC1A77915E008D3798 /* JSCachedData.m in Sources */,
 				849CCDAE1A778D37008D3798 /* SQLitePersistentObject.m in Sources */,
 				849CCDC61A778D8A008D3798 /* JSCacheCategory.m in Sources */,
@@ -629,7 +629,7 @@
 				849CCDA31A778D37008D3798 /* NSString-SQLiteColumnName.m in Sources */,
 				849CCDCD1A778D8A008D3798 /* JSCacheItem.m in Sources */,
 				849CCDD01A778D8A008D3798 /* JSCacheItemPool.m in Sources */,
-				849CCDD31A778D8A008D3798 /* JSCacheItemRef.m in Sources */,
+				849CCDD31A778D8A008D3798 /* JSCacheCateItem.m in Sources */,
 				849CCDED1A77915E008D3798 /* JSCachedData.m in Sources */,
 				849CCDC71A778D8A008D3798 /* JSCacheCategory.m in Sources */,
 				849CCDF01A77915E008D3798 /* JSDataCacheService.m in Sources */,

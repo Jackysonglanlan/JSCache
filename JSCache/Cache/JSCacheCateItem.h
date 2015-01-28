@@ -1,5 +1,5 @@
 //
-//  TTCacheItemRef.h
+//  JSCacheCateItem.h
 //  TianTian
 //
 //  Created by Song Lanlan on 13-11-6.
@@ -8,7 +8,7 @@
 
 #import "SQLitePersistentObject.h"
 
-@interface JSCacheItemRef : SQLitePersistentObject
+@interface JSCacheCateItem : SQLitePersistentObject
 
 @property(nonatomic,retain) NSString *cateName;
 @property(nonatomic,retain) NSString *entityId;

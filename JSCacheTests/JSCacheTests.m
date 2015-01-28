@@ -11,7 +11,7 @@
 #import "JSDataCacheService.h"
 
 #import "SQLiteInstanceManager.h"
-#import "JSCacheItemRef.h"
+#import "JSCacheCateItem.h"
 #import "JSCacheCategory.h"
 #import "JSCacheItem.h"
 
@@ -39,7 +39,7 @@
     [[SQLiteInstanceManager sharedManager] database];
     
     [self cleanDBTable:[JSCacheCategory tableName]];
-    [self cleanDBTable:[JSCacheItemRef tableName]];
+    [self cleanDBTable:[JSCacheCateItem tableName]];
     [self cleanDBTable:[JSCacheItem tableName]];
 }
 

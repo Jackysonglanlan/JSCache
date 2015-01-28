@@ -10,7 +10,7 @@
 #import "SynthesizeSingleton.h"
 
 #import "JSCacheItem.h"
-#import "JSCacheItemRef.h"
+#import "JSCacheCateItem.h"
 
 @interface JSCacheItemPool : NSObject
 SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(JSCacheItemPool);

@@ -7,14 +7,14 @@
 //
 
 #import "JSCacheCategory.h"
-#import "JSCacheItemRef.h"
+#import "JSCacheCateItem.h"
 #import "JSCacheItem.h"
 #import "JSCacheItemPool.h"
 
 #import "JSShortHand.h"
 
 @implementation JSCacheCategory{  
-  // array of TTCacheItemRef
+  // array of JSCacheCateItem
   NSMutableArray *itemRefs;
   
   // pool
@@ -50,7 +50,7 @@ DECLARE_PROPERTIES(
 }
 
 -(void)addItem:(JSCacheItem *)item atIndex:(NSUInteger)index{
-  JSCacheItemRef *ref = [JSCacheItemRef new];
+  JSCacheCateItem *ref = [JSCacheCateItem new];
   ref.cateName = name;
   ref.entityId = item.entityId;
   [itemRefs insertObject:ref atIndex:index];
@@ -67,7 +67,7 @@ DECLARE_PROPERTIES(
   NSMutableArray *idList = [NSMutableArray arrayWithCapacity:itemRefs.count];
 
   // save refs
-    for (JSCacheItemRef *ref in itemRefs) {
+    for (JSCacheCateItem *ref in itemRefs) {
         [idList addObject:ref.entityId];
         [ref save];
     }
@@ -103,8 +103,8 @@ DECLARE_PROPERTIES(
 }
 
 -(void)removeItemByEntityId:(NSString*)entityId{
-    JSCacheItemRef *r = nil;
-    for (JSCacheItemRef *ref in itemRefs) {
+    JSCacheCateItem *r = nil;
+    for (JSCacheCateItem *ref in itemRefs) {
         if ([ref.entityId isEqualToString:entityId]){
             r = ref;
             break;

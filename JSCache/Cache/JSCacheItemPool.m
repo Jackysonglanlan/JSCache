@@ -52,7 +52,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSCacheItemPool);
 -(NSArray*)getItemsInRefList:(NSArray*)itemRefList{
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:itemRefList.count];
     
-    for (JSCacheItemRef *ref in itemRefList) {
+    for (JSCacheCateItem *ref in itemRefList) {
         JSCacheItem *item = [self getItemOfEntityId:ref.entityId];
         if (item) {
             [items addObject:item];
