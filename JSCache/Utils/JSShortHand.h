@@ -9,6 +9,20 @@
 #define template_ios_project_JSShortHand_h
 
 ////////////////////////////////////////
+/////// Log ////////
+////////////////////////////////////////
+
+// log
+#ifdef DEBUG
+#define DLog( s, ... ) NSLog( @"<%@:%d> %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent],\
+__LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+//#define DLog( s, ... )
+#else
+#define DLog( s, ... )
+#endif
+
+
+////////////////////////////////////////
 /////// Common ////////
 ////////////////////////////////////////
 
