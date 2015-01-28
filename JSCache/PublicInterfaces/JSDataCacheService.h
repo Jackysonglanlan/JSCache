@@ -27,6 +27,9 @@
 @interface JSDataCacheService : NSObject
 SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(JSDataCacheService);
 
+// The underlining DB JSCache will use to store data
+@property(nonatomic,retain) NSString *dbFullPath;
+
 #pragma mark get
 
 -(NSTimeInterval)getRefreshTime:(NSString*)cateName;

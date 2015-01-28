@@ -9,7 +9,7 @@
 #ifndef JSCache_JSCache_h
 #define JSCache_JSCache_h
 
-#import "TTDataCacheService.h"
-#import "TTCachedData.h"
+#import "JSDataCacheService.h"
+#import "JSCachedData.h"
 
 #endif

@@ -33,6 +33,8 @@
     service = [JSDataCacheService sharedInstance];
     [service retain];
     
+    service.dbFullPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"aaa.sqlite"];
+    
     // connect database
     [[SQLiteInstanceManager sharedManager] database];
     

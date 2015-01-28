@@ -17,7 +17,7 @@
 
 #import "JSShortHand.h"
 
-#pragma mark TTCacheRefresher
+#pragma mark JSCacheRefresher
 
 @implementation JSCacheRefresher{
   NSMutableDictionary *underlineCache;
@@ -144,7 +144,7 @@
 
 @end
 
-#pragma mark TTDataCacheService
+#pragma mark JSDataCacheService
 
 @implementation JSDataCacheService{
   // [cateName -> TTCacheCategory]
@@ -167,7 +167,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   return self;
 }
 
-#pragma mark private
+#pragma mark - private
 
 #pragma mark MemoryWarning
 -(void)cleanCacheOnly{
@@ -186,6 +186,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
     }
   
   return cate;
+}
+
+#pragma mark - public
+
+#pragma mark config
+
+-(void)setDbFullPath:(NSString *)dbFullPath{
+    sqlManager.databaseFilepath = dbFullPath;
+}
+
+-(NSString*)dbFullPath{
+    return sqlManager.databaseFilepath;
 }
 
 #pragma mark get
