@@ -47,7 +47,7 @@
   [super dealloc];
 }
 
--(void)addToCache:(NSArray*)dataList needSyncToDB:(BOOL)needSyncToDB{
+-(void)createInCache:(NSArray*)dataList needSyncToDB:(BOOL)needSyncToDB{
   if (dataList.count == 0) return;
   
   JSCacheCategory *cate = [JSCacheCategory new];
@@ -85,7 +85,7 @@
   
   // if haven't had category yet, we auto add it
   if (!cate) {
-    [self addToCache:dataList needSyncToDB:NO];
+    [self createInCache:dataList needSyncToDB:NO];
   }
 
   NSMutableArray *itemsNeedSyncToDB = [NSMutableArray arrayWithCapacity:dataList.count];

@@ -78,7 +78,7 @@
                                                   for (int i=0; i<5; i++) {
                                                       [arr addObject:@{@"key1": @1, @"key2":@2, @"postId":testEntityId}];
                                                   }
-                                                  [refresher addToCache:arr needSyncToDB:YES];
+                                                  [refresher createInCache:arr needSyncToDB:YES];
                                                   
                                                   [self finishedAsyncOperation];
                                                   
@@ -195,7 +195,7 @@
                           for (int i=0; i<5; i++) {
                               [arr addObject:@{@"keyA": @(i), @"postId":testEntityId}];
                           }
-                          [refresher addToCache:arr needSyncToDB:YES];
+                          [refresher createInCache:arr needSyncToDB:YES];
                       }
                       entityIdGetter:^NSString *(NSDictionary *data) {
                           return data[@"postId"];
@@ -248,7 +248,7 @@
                           NSMutableArray *arr = [NSMutableArray array];
                           [arr addObject:@{@"keyA": @1, @"postId":testEntityId1}];
                           [arr addObject:@{@"keyB": @2, @"postId":testEntityId2}];
-                          [refresher addToCache:arr needSyncToDB:YES];
+                          [refresher createInCache:arr needSyncToDB:YES];
                       }
                       entityIdGetter:^NSString *(NSDictionary *data) {
                           return data[@"postId"];
@@ -273,7 +273,7 @@
                           NSMutableArray *arr = [NSMutableArray array];
                           [arr addObject:@{@"keyA": @1, @"postId":testEntityId1}];
                           [arr addObject:@{@"keyB": @2, @"postId":testEntityId2}];
-                          [refresher addToCache:arr needSyncToDB:YES];
+                          [refresher createInCache:arr needSyncToDB:YES];
                       }
                       entityIdGetter:^NSString *(NSDictionary *data) {
                           return data[@"postId"];
@@ -300,7 +300,7 @@
                           NSMutableArray *arr = [NSMutableArray array];
                           [arr addObject:@{@"keyA": @1, @"postId":testEntityId1}];
                           [arr addObject:@{@"keyB": @2, @"postId":testEntityId2}];
-                          [refresher addToCache:arr needSyncToDB:YES];
+                          [refresher createInCache:arr needSyncToDB:YES];
                       }
                       entityIdGetter:^NSString *(NSDictionary *data) {
                           return data[@"postId"];
@@ -314,7 +314,7 @@
                           NSMutableArray *arr = [NSMutableArray array];
                           [arr addObject:@{@"keyA": @1, @"postId":testEntityId1}];// with the same id
                           [arr addObject:@{@"keyB": @2, @"postId":testEntityId2}];// with the same id
-                          [refresher addToCache:arr needSyncToDB:YES];
+                          [refresher createInCache:arr needSyncToDB:YES];
                       }
                       entityIdGetter:^NSString *(NSDictionary *data) {
                           return data[@"postId"];
@@ -352,7 +352,7 @@
                               for (int i=0; i<10; i++) {
                                   [arr addObject:@{@"keyA": @1, @"postId":[testEntityId stringByAppendingFormat:@"%d",i]}];
                               }
-                              [refresher addToCache:arr needSyncToDB:YES];
+                              [refresher createInCache:arr needSyncToDB:YES];
                           }
                           entityIdGetter:^NSString *(NSDictionary *data) {
                               return data[@"postId"];

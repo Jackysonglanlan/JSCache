@@ -13,8 +13,9 @@
 @interface JSCacheRefresher : NSObject
 @property(nonatomic,copy) void (^dbOperationDidFinishBlock)(void);
 
+// Create an record in cache, if there's one exist with the same cateName, it will be *removed*.
 // dataList is Array of NSDictionary
--(void)addToCache:(NSArray*)dataList needSyncToDB:(BOOL)needSyncToDB;
+-(void)createInCache:(NSArray*)dataList needSyncToDB:(BOOL)needSyncToDB;
 
 // If there is a category exists, this method will insert the data into it
 // If there isn't, it will create a new one in cache AND in DB
