@@ -198,7 +198,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
     return sqlManager.databaseFilepath;
 }
 
-#pragma mark get
+#pragma mark Read
 
 -(NSTimeInterval)getRefreshTime:(NSString*)cateName{
   // find in cache
@@ -353,7 +353,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   return item.data;
 }
 
-#pragma mark add
+#pragma mark Create
 
 -(void)addSingleDataToCache:(NSString*)cateName entityId:(NSString*)entityId
                        data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB{
@@ -374,7 +374,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   }
 }
 
-#pragma mark update
+#pragma mark Update
 
 -(void)updateCachedDataOnly:(NSString*)cateName dataList:(NSArray*)dataList entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter{
   JSCacheCategory *cate = underlineCache[cateName];
@@ -395,7 +395,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   [itemPool addOrUpdateItem:item data:data needSyncToDB:needSyncToDB];
 }
 
-#pragma mark delete
+#pragma mark Delete
 
 -(void)cleanDBTable:(NSString*)tableName{
   if ([[SQLiteInstanceManager sharedManager] tableExists:tableName]) {

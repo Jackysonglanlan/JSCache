@@ -10,28 +10,45 @@
 
 #import "SynthesizeSingleton.h"
 
+/**
+ * Responsible for refreshing the cache (Create and Update ops)
+ */
 @interface JSCacheRefresher : NSObject
 @property(nonatomic,copy) void (^dbOperationDidFinishBlock)(void);
 
-// Create an record in cache, if there's one exist with the same cateName, it will be *removed*.
-// dataList is Array of NSDictionary
+/**
+ * Create an record in cache, if there's one exist with the same cateName, it will be *removed*.
+ * @param dataList Array of NSDictionary
+ */
 -(void)createInCache:(NSArray*)dataList needSyncToDB:(BOOL)needSyncToDB;
 
-// If there is a category exists, this method will insert the data into it
-// If there isn't, it will create a new one in cache AND in DB
-// dataList is Array of NSDictionary
+/**
+ * If there is a category exists, this method will insert the data into it
+ * If there isn't, it will create a new one in cache AND in DB
+ * @param dataList Array of NSDictionary
+ */
 -(void)insertToCache:(NSArray*)dataList;
 
 @end
 
-// Use this class to manange App's Cache
+/**
+ * Main class of JSCache
+ */
 @interface JSDataCacheService : NSObject
 SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(JSDataCacheService);
 
 // The underlining DB JSCache will use to store data
 @property(nonatomic,retain) NSString *dbFullPath;
 
-#pragma mark get
+#pragma mark Create
+
+-(void)addSingleDataToCache:(NSString*)cateName entityId:(NSString*)entityId
+                       data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB;
+
+-(void)insertSingleDataToCache:(NSString*)cateName entityId:(NSString*)entityId atIndex:(NSUInteger)index
+                          data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB;
+
+#pragma mark Read
 
 -(NSTimeInterval)getRefreshTime:(NSString*)cateName;
 
@@ -48,21 +65,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(JSDataCacheService);
 
 -(NSDictionary*)getCachedData:(NSString*)cateName entityId:(NSString*)entityId;
 
-#pragma mark add
-
--(void)addSingleDataToCache:(NSString*)cateName entityId:(NSString*)entityId
-                       data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB;
-
--(void)insertSingleDataToCache:(NSString*)cateName entityId:(NSString*)entityId atIndex:(NSUInteger)index
-                          data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB;
-
-#pragma mark update
+#pragma mark Update
 
 -(void)updateCachedDataOnly:(NSString*)cateName dataList:(NSArray*)dataList entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter;
 
 -(void)updateCachedData:(NSString*)entityId data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB;
 
-#pragma mark delete
+#pragma mark Delete
 
 // Clean all cached data
 -(void)cleanCache:(BOOL)needSyncToDB;
