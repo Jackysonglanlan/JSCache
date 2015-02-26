@@ -25,7 +25,6 @@
   
   SQLiteInstanceManager *sqlManager;
 }
-@synthesize dbOperationDidFinishBlock;
 
 - (id)initWithUnderlineCache:(NSMutableDictionary*)cache cateName:(NSString*)name
               entityIdGetter:(NSString *(^)(NSDictionary *data))getter{
@@ -43,7 +42,6 @@
 - (void)dealloc{
   JS_releaseSafely(cateName);
   JS_releaseSafely(entityIdGetter);
-  JS_releaseSafely(dbOperationDidFinishBlock);
   [super dealloc];
 }
 
@@ -64,17 +62,10 @@
   
   if (needSyncToDB) {
     // refresh DB
-    [sqlManager doInTransactionAsync:^{
+    [sqlManager doInTransaction:^{
       [self removeAllCachedDataInDBWithCateName:cateName];
       [self saveDataToDB:cate];
-    }
-                           didFinish:^{
-                             if (dbOperationDidFinishBlock) {
-                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                     dbOperationDidFinishBlock();
-                                 });
-                             }
-                           }];
+    }];
   }
   
   [cate release];
@@ -104,18 +95,11 @@
     }
   
   // transaction batch save
-  [sqlManager doInTransactionAsync:^{
+  [sqlManager doInTransaction:^{
       for (JSCacheItem *item in itemsNeedSyncToDB) {
           [itemPool addOrUpdateItem:item data:item.data needSyncToDB:YES];
       }
-  }
-                         didFinish:^{
-                           if (dbOperationDidFinishBlock) {
-                               dispatch_async(dispatch_get_main_queue(), ^{
-                                   dbOperationDidFinishBlock();
-                               });
-                           }
-                         }];
+  }];
 }
 
 // save all data of the category into DB
@@ -230,7 +214,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
                                                                          return entityId;
                                                                        }] autorelease];
       refreshBlock(refresher); // update cache/DB
-      // refreshBlock will invoke an async method, so it will return immediately
     }
     
     return data;
@@ -255,7 +238,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
                                                                              cateName:cateName
                                                                        entityIdGetter:entityIdGetter] autorelease];
       refreshBlock(refresher); // update cache/DB
-      // refreshBlock will invoke an async method, so it will return immediately
     }
     
     // here, we return the cached data
@@ -274,7 +256,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
                                                                            cateName:cateName
                                                                      entityIdGetter:entityIdGetter] autorelease];
     refreshBlock(refresher); // update cache/DB
-    // doBusiness will invoke an async method, so it will return immediately
     
     // so, here no data in cache, not in DB, and the newest data haven't return yet
     // we have to return nil
@@ -292,7 +273,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
                                                                            cateName:cateName
                                                                      entityIdGetter:entityIdGetter] autorelease];
     refreshBlock(refresher); // update cache/DB
-    // refreshBlock will invoke an async method, so it will return immediately
   }
 
   return [cate getRawDataList];
@@ -363,15 +343,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
                                                                     entityIdGetter:^NSString *(NSDictionary *data) {
                                                                         return entityId;
                                                                     }];
-    [refresher setDbOperationDidFinishBlock:^{
-        [refresher release];
-    }];
 
     [refresher createInCache:@[data] needSyncToDB:needSyncToDB];
     
-    if (!needSyncToDB) {
-        [refresher release];
-    }
+    [refresher release];
 }
 
 -(void)insertSingleDataToCate:(NSString*)cateName entityId:(NSString*)entityId atIndex:(NSUInteger)index
@@ -423,12 +398,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
 
   // clean DB
   // TODO there maybe a bug: if someone is inserting the DB, and this method is called in memory_warning, it will crash!
-  [sqlManager doInTransactionAsync:^{
+  [sqlManager doInTransaction:^{
     [self cleanDBTable:[JSCacheCategory tableName]];
     [self cleanDBTable:[JSCacheCateItem tableName]];
     [self cleanDBTable:[JSCacheItem tableName]];
-  }
-                         didFinish:nil];
+  }];
 }
 
 -(void)deleteAllCachedDataInCate:(NSString *)cateName needSyncToDB:(BOOL)needSyncToDB{
@@ -439,14 +413,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   
   // delete from DB
 
-  [sqlManager doInTransactionAsync:^{
+  [sqlManager doInTransaction:^{
     [sqlManager executeUpdateSQL:[NSString stringWithFormat:@"delete from %@ where name = '%@' ",
                                   [JSCacheCategory tableName], cateName]];
     
     [sqlManager executeUpdateSQL:[NSString stringWithFormat:@"delete from %@ where cate_name = '%@' ",
                                   [JSCacheCateItem tableName], cateName]];    
-  }
-                         didFinish:nil];
+  }];
 
   // here, for we don't know whether other categories have the same items in this deleted category,
   // so we CAN't remove items in TTCacheItemPool and in DB.

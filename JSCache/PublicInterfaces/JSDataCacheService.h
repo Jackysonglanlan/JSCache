@@ -14,7 +14,6 @@
  * Responsible for refreshing the cache (Create and Update ops)
  */
 @interface JSCacheRefresher : NSObject
-@property(nonatomic,copy) void (^dbOperationDidFinishBlock)(void);
 
 /**
  * Create an record in cache, if there's one exist with the same cateName, it will be *removed*.

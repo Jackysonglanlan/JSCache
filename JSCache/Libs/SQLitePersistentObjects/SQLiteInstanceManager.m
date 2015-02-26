@@ -99,21 +99,19 @@ static SQLiteInstanceManager *sharedSQLiteManager = nil;
   
 }
 
--(void)doInTransactionAsync:(void (^)(void))block didFinish:(void (^)(void))finishBlock{
+-(void)doInTransaction:(void (^)(void))block{
+    if (!block) {
+        return;
+    }
+    
   [self.class performUsingDBOperationQueue:^{
     // Start a SQLite Transaction
     sqlite3_exec(self.database, "BEGIN", 0, 0, 0);
     
-    if (block) {
       block();
-    }
     
     // Finishing SQLite transaction
     sqlite3_exec(self.database, "COMMIT", 0, 0, 0);
-    
-    if (finishBlock) {
-      finishBlock();
-    }
   }];
 }
 

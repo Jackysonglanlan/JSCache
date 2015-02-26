@@ -53,7 +53,7 @@
     cate.name = @"name";
     cate.refreshTimestamp = [[NSDate date] timeIntervalSince1970];
     
-    [[SQLiteInstanceManager sharedManager] doInTransactionAsync:^{
+    [[SQLiteInstanceManager sharedManager] doInTransaction:^{
         for (int i=0; i<5; i++) {
             JSCacheItem *item = [JSCacheItem new];
             item.origJsonData = [@"json str...." stringByAppendingFormat:@"%d",i];
@@ -64,9 +64,7 @@
         
         [cate save];
         [cate saveItems];
-    }
-                                                      didFinish:^{
-                                                      }];
+    }];
 }
 
 -(void)testCache{
@@ -350,9 +348,6 @@
     for (int i=0; i<10; i++) {
         [service getAndRefreshCachedDataInCate:[NSString stringWithFormat:@"cate-%d",i]
                                 cacheRefresher:^(JSCacheRefresher *refresher) {
-                                    [refresher setDbOperationDidFinishBlock:^{
-                                    }];
-                                    
                                     NSMutableArray *arr = [NSMutableArray array];
                                     for (int i=0; i<10; i++) {
                                         [arr addObject:@{@"keyA": @1, @"postId":[testEntityId stringByAppendingFormat:@"%d",i]}];

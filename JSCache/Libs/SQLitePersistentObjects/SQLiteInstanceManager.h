@@ -69,6 +69,6 @@ typedef enum SQLITE3LockingMode
 
 -(NSInteger)countWithTableName:(NSString *)tableName criteria:(NSString *)criteriaString;
 
--(void)doInTransactionAsync:(void (^)(void))block didFinish:(void (^)(void))finishBlock;
+-(void)doInTransaction:(void (^)(void))block;
 
 @end
