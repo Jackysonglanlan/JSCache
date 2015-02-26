@@ -43,6 +43,11 @@
     [self cleanDBTable:[JSCacheItem tableName]];
 }
 
+-(void)after{
+    [service release];
+    service = nil;
+}
+
 -(void)testSave{
     JSCacheCategory *cate = [JSCacheCategory new];
     cate.name = @"name";
