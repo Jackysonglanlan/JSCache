@@ -214,9 +214,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   return cate.refreshTimestamp;
 }
 
--(JSCachedData*)getAndRefreshSingleCachedData:(NSString*)cateName entityId:(NSString*)entityId
-                               cacheRefresher:(void (^)(JSCacheRefresher *refresher))refreshBlock
-                     refreshIntervalInSeconds:(NSTimeInterval)interval{
+-(JSCachedData*)getAndRefreshSingleCachedDataInCate:(NSString*)cateName entityId:(NSString*)entityId
+                                     cacheRefresher:(void (^)(JSCacheRefresher *refresher))refreshBlock
+                           refreshIntervalInSeconds:(NSTimeInterval)interval{
   
   // find in cache then DB
   JSCachedData *data = [self getCachedDataOfEntityId:entityId];
@@ -241,8 +241,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   return nil;
 }
 
--(NSArray*)getAndRefreshCachedData:(NSString*)cateName cacheRefresher:(void (^)(JSCacheRefresher *refresher))refreshBlock
-                    entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter refreshIntervalInSeconds:(NSTimeInterval)interval{
+-(NSArray*)getAndRefreshCachedDataInCate:(NSString*)cateName cacheRefresher:(void (^)(JSCacheRefresher *refresher))refreshBlock
+                          entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter
+                refreshIntervalInSeconds:(NSTimeInterval)interval{
   JSCacheCategory *cate = underlineCache[cateName];
   
   // find in cache
@@ -297,7 +298,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   return [cate getRawDataList];
 }
 
--(NSArray*)getCachedData:(NSString*)cateName{
+-(NSArray*)getCachedDataInCate:(NSString*)cateName{
   JSCacheCategory *cate = underlineCache[cateName];
   
   // data is in cache
@@ -320,7 +321,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   return [[[JSCachedData alloc] initWithData:item.data refreshTime:item.refreshTimestamp] autorelease];
 }
 
--(NSDictionary*)getCachedData:(NSString*)cateName entityId:(NSString*)entityId{
+-(NSDictionary*)getCachedDataInCate:(NSString*)cateName entityId:(NSString*)entityId{
   JSCacheCategory *cate = underlineCache[cateName];
   
   // data is in cache
@@ -355,18 +356,26 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
 
 #pragma mark Create
 
--(void)addSingleDataToCache:(NSString*)cateName entityId:(NSString*)entityId
-                       data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB{
-  JSCacheRefresher *refresher = [[[JSCacheRefresher alloc] initWithUnderlineCache:underlineCache
-                                                                         cateName:cateName
-                                                                   entityIdGetter:^NSString *(NSDictionary *data) {
-                                                                     return entityId;
-                                                                   }] autorelease];
-  [refresher insertToCache:@[data]];
+-(void)addSingleDataToCate:(NSString*)cateName entityId:(NSString*)entityId
+                      data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB{
+    JSCacheRefresher *refresher = [[JSCacheRefresher alloc] initWithUnderlineCache:underlineCache
+                                                                          cateName:cateName
+                                                                    entityIdGetter:^NSString *(NSDictionary *data) {
+                                                                        return entityId;
+                                                                    }];
+    [refresher setDbOperationDidFinishBlock:^{
+        [refresher release];
+    }];
+
+    [refresher createInCache:@[data] needSyncToDB:needSyncToDB];
+    
+    if (!needSyncToDB) {
+        [refresher release];
+    }
 }
 
--(void)insertSingleDataToCache:(NSString*)cateName entityId:(NSString*)entityId atIndex:(NSUInteger)index
-                          data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB{
+-(void)insertSingleDataToCate:(NSString*)cateName entityId:(NSString*)entityId atIndex:(NSUInteger)index
+                         data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB{
   JSCacheCategory *cate = underlineCache[cateName];
   if (cate) {
     [cate addItemFromRawData:data entityId:entityId atIndex:index];
@@ -376,8 +385,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
 
 #pragma mark Update
 
--(void)updateCachedDataInMemoryWithCateName:(NSString*)cateName dataList:(NSArray*)dataList
-                             entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter{
+-(void)updateCachedDataInMemoryInCate:(NSString*)cateName dataList:(NSArray*)dataList
+                       entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter{
   JSCacheCategory *cate = underlineCache[cateName];
   if (cate) {
     [cate removeAllItems];
@@ -422,7 +431,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
                          didFinish:nil];
 }
 
--(void)deleteCachedData:(NSString *)cateName needSyncToDB:(BOOL)needSyncToDB{
+-(void)deleteAllCachedDataInCate:(NSString *)cateName needSyncToDB:(BOOL)needSyncToDB{
   // delete from cache
   [underlineCache removeObjectForKey:cateName];
   
@@ -443,7 +452,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   // so we CAN't remove items in TTCacheItemPool and in DB.
 }
 
--(void)deleteCachedDataInMemoryWithCateName:(NSString*)cateName entityId:(NSString*)entityId{
+-(void)deleteCachedDataInMemoryInCate:(NSString*)cateName entityId:(NSString*)entityId{
   JSCacheCategory *cate = underlineCache[cateName];
   [cate removeItemByEntityId:entityId];
 }

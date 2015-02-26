@@ -73,26 +73,26 @@
     NSString *cateName = @"main_page";
     NSString *testEntityId = @"110e86baee8f136a683da65e93a50e7";
     
-    NSArray *dataList = [service getAndRefreshCachedData:cateName
-                                          cacheRefresher:^(JSCacheRefresher *refresher) {
-                                              // simulate async invocation
-                                              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                                  [NSThread sleepForTimeInterval:2];
-                                                  
-                                                  NSMutableArray *arr = [NSMutableArray array];
-                                                  for (int i=0; i<5; i++) {
-                                                      [arr addObject:@{@"key1": @1, @"key2":@2, @"postId":testEntityId}];
-                                                  }
-                                                  [refresher createInCache:arr needSyncToDB:YES];
-                                                  
-                                                  [self finishedAsyncOperation];
-                                                  
-                                              });
-                                          }
-                                          entityIdGetter:^NSString *(NSDictionary *data) {
-                                              return data[@"postId"];
-                                          }
-                                refreshIntervalInSeconds:0];
+    NSArray *dataList = [service getAndRefreshCachedDataInCate:cateName
+                                                cacheRefresher:^(JSCacheRefresher *refresher) {
+                                                    // simulate async invocation
+                                                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                                        [NSThread sleepForTimeInterval:2];
+                                                        
+                                                        NSMutableArray *arr = [NSMutableArray array];
+                                                        for (int i=0; i<5; i++) {
+                                                            [arr addObject:@{@"key1": @1, @"key2":@2, @"postId":testEntityId}];
+                                                        }
+                                                        [refresher createInCache:arr needSyncToDB:YES];
+                                                        
+                                                        [self finishedAsyncOperation];
+                                                        
+                                                    });
+                                                }
+                                                entityIdGetter:^NSString *(NSDictionary *data) {
+                                                    return data[@"postId"];
+                                                }
+                                      refreshIntervalInSeconds:0];
     
     // first use, no data in cache and DB
     assertThat(dataList, nilValue());
@@ -101,24 +101,24 @@
     // async invocation finished
     
     // use again
-    dataList = [service getAndRefreshCachedData:cateName
-                                 cacheRefresher:^(JSCacheRefresher *refresher) {
-                                     // simulate 2nd async invocation
-                                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                         [NSThread sleepForTimeInterval:2];
-                                         
-                                         NSMutableArray *arr = [NSMutableArray array];
-                                         for (int i=0; i<3; i++) {
-                                             [arr addObject:@{@"keyAgain": @1, @"postId":testEntityId}];
-                                         }
-                                         [refresher insertToCache:arr];
-                                         [self finishedAsyncOperation];
-                                     });
-                                 }
-                                 entityIdGetter:^NSString *(NSDictionary *data) {
-                                     return data[@"postId"];
-                                 }
-                       refreshIntervalInSeconds:0];
+    dataList = [service getAndRefreshCachedDataInCate:cateName
+                                       cacheRefresher:^(JSCacheRefresher *refresher) {
+                                           // simulate 2nd async invocation
+                                           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                               [NSThread sleepForTimeInterval:2];
+                                               
+                                               NSMutableArray *arr = [NSMutableArray array];
+                                               for (int i=0; i<3; i++) {
+                                                   [arr addObject:@{@"keyAgain": @1, @"postId":testEntityId}];
+                                               }
+                                               [refresher insertToCache:arr];
+                                               [self finishedAsyncOperation];
+                                           });
+                                       }
+                                       entityIdGetter:^NSString *(NSDictionary *data) {
+                                           return data[@"postId"];
+                                       }
+                             refreshIntervalInSeconds:0];
     
     // here should be the data added at the 1st time
     assertThatInt(dataList.count, equalToInt(5));
@@ -134,11 +134,11 @@
     
     int cateItemCountShouldBe = 5+3;
     
-    dataList = [service getCachedData:cateName];
+    dataList = [service getCachedDataInCate:cateName];
     assertThatInt(dataList.count, equalToInt(cateItemCountShouldBe));
     assertThat(dataList[0][@"postId"], is(testEntityId));
     
-    NSDictionary *data = [service getCachedData:cateName entityId:testEntityId];
+    NSDictionary *data = [service getCachedDataInCate:cateName entityId:testEntityId];
     assertThat(data[@"postId"], is(testEntityId));
     
     
@@ -193,41 +193,41 @@
     NSString *testEntityId = @"11111";
     
     NSString *cateName1 = @"aaa";
-    [service getAndRefreshCachedData:cateName1
-                      cacheRefresher:^(JSCacheRefresher *refresher) {
-                          NSMutableArray *arr = [NSMutableArray array];
-                          
-                          for (int i=0; i<5; i++) {
-                              [arr addObject:@{@"keyA": @(i), @"postId":testEntityId}];
-                          }
-                          [refresher createInCache:arr needSyncToDB:YES];
-                      }
-                      entityIdGetter:^NSString *(NSDictionary *data) {
-                          return data[@"postId"];
-                      }
-            refreshIntervalInSeconds:0];
+    [service getAndRefreshCachedDataInCate:cateName1
+                            cacheRefresher:^(JSCacheRefresher *refresher) {
+                                NSMutableArray *arr = [NSMutableArray array];
+                                
+                                for (int i=0; i<5; i++) {
+                                    [arr addObject:@{@"keyA": @(i), @"postId":testEntityId}];
+                                }
+                                [refresher createInCache:arr needSyncToDB:YES];
+                            }
+                            entityIdGetter:^NSString *(NSDictionary *data) {
+                                return data[@"postId"];
+                            }
+                  refreshIntervalInSeconds:0];
     
     NSString *cateName2 = @"bbb";
-    [service getAndRefreshCachedData:cateName2
-                      cacheRefresher:^(JSCacheRefresher *refresher) {
-                          NSMutableArray *arr = [NSMutableArray array];
-                          
-                          for (int i=0; i<5; i++) {
-                              [arr addObject:@{@"keyB": @(i), @"postId":testEntityId}];
-                          }
-                          [refresher insertToCache:arr];// TODO how to do in DB if you insert an item with same id in memory?
-                      }
-                      entityIdGetter:^NSString *(NSDictionary *data) {
-                          return data[@"postId"];
-                      }
-            refreshIntervalInSeconds:0];
+    [service getAndRefreshCachedDataInCate:cateName2
+                            cacheRefresher:^(JSCacheRefresher *refresher) {
+                                NSMutableArray *arr = [NSMutableArray array];
+                                
+                                for (int i=0; i<5; i++) {
+                                    [arr addObject:@{@"keyB": @(i), @"postId":testEntityId}];
+                                }
+                                [refresher insertToCache:arr];// TODO how to do in DB if you insert an item with same id in memory?
+                            }
+                            entityIdGetter:^NSString *(NSDictionary *data) {
+                                return data[@"postId"];
+                            }
+                  refreshIntervalInSeconds:0];
     
     // update data
     [service updateCachedDataWithId:testEntityId data:@{@"newKey": @"newValue"} needSyncToDB:YES];
     
     // should update all the data whose entityId is testEntityId
-    NSDictionary *data1 = [service getCachedData:cateName1 entityId:testEntityId];
-    NSDictionary *data2 = [service getCachedData:cateName2 entityId:testEntityId];
+    NSDictionary *data1 = [service getCachedDataInCate:cateName1 entityId:testEntityId];
+    NSDictionary *data2 = [service getCachedDataInCate:cateName2 entityId:testEntityId];
     
     assertThat(data1[@"newKey"], notNilValue());
     assertThat(data1[@"newKey"], is(@"newValue"));
@@ -246,99 +246,99 @@
     NSString *testEntityId2 = @"22222";
     NSString *cateName = @"aaa";
     
-    // deleteCachedData:needSyncToDB:
+    // deleteAllCachedDataInCate:needSyncToDB:
     
-    [service getAndRefreshCachedData:cateName
-                      cacheRefresher:^(JSCacheRefresher *refresher) {
-                          NSMutableArray *arr = [NSMutableArray array];
-                          [arr addObject:@{@"keyA": @1, @"postId":testEntityId1}];
-                          [arr addObject:@{@"keyB": @2, @"postId":testEntityId2}];
-                          [refresher createInCache:arr needSyncToDB:YES];
-                      }
-                      entityIdGetter:^NSString *(NSDictionary *data) {
-                          return data[@"postId"];
-                      }
-            refreshIntervalInSeconds:0];
+    [service getAndRefreshCachedDataInCate:cateName
+                            cacheRefresher:^(JSCacheRefresher *refresher) {
+                                NSMutableArray *arr = [NSMutableArray array];
+                                [arr addObject:@{@"keyA": @1, @"postId":testEntityId1}];
+                                [arr addObject:@{@"keyB": @2, @"postId":testEntityId2}];
+                                [refresher createInCache:arr needSyncToDB:YES];
+                            }
+                            entityIdGetter:^NSString *(NSDictionary *data) {
+                                return data[@"postId"];
+                            }
+                  refreshIntervalInSeconds:0];
     
-    [service deleteCachedData:cateName needSyncToDB:YES];
+    [service deleteAllCachedDataInCate:cateName needSyncToDB:YES];
     
     NSInteger countInDB = [JSCacheCategory countByCriteria:@"where name = '%@'",cateName];
     assertThatInt(countInDB, equalToInt(0));
     countInDB = [JSCacheItem countByCriteria:@"where cate_name = '%@'",cateName];
     assertThatInt(countInDB, equalToInt(0));
     
-    NSArray *dataList = [service getCachedData:cateName];
+    NSArray *dataList = [service getCachedDataInCate:cateName];
     
     assertThat(dataList, nilValue());
     
-    // deleteCachedDataOnly:entityId:
+    // deleteCachedDataInMemoryInCate:entityId:
     
-    [service getAndRefreshCachedData:cateName
-                      cacheRefresher:^(JSCacheRefresher *refresher) {
-                          NSMutableArray *arr = [NSMutableArray array];
-                          [arr addObject:@{@"keyA": @1, @"postId":testEntityId1}];
-                          [arr addObject:@{@"keyB": @2, @"postId":testEntityId2}];
-                          [refresher createInCache:arr needSyncToDB:YES];
-                      }
-                      entityIdGetter:^NSString *(NSDictionary *data) {
-                          return data[@"postId"];
-                      }
-            refreshIntervalInSeconds:0];
+    [service getAndRefreshCachedDataInCate:cateName
+                            cacheRefresher:^(JSCacheRefresher *refresher) {
+                                NSMutableArray *arr = [NSMutableArray array];
+                                [arr addObject:@{@"keyA": @1, @"postId":testEntityId1}];
+                                [arr addObject:@{@"keyB": @2, @"postId":testEntityId2}];
+                                [refresher createInCache:arr needSyncToDB:YES];
+                            }
+                            entityIdGetter:^NSString *(NSDictionary *data) {
+                                return data[@"postId"];
+                            }
+                  refreshIntervalInSeconds:0];
     
-    [service deleteCachedDataInMemoryWithCateName:cateName entityId:testEntityId1];
+    [service deleteCachedDataInMemoryInCate:cateName entityId:testEntityId1];
     
     countInDB = [JSCacheItem countByCriteria:@"where entity_id = '%@'",testEntityId1];
     assertThatInt(countInDB, equalToInt(1)); // still in DB
     countInDB = [JSCacheItem countByCriteria:@"where entity_id = '%@'",testEntityId2];
     assertThatInt(countInDB, equalToInt(1));
     
-    dataList = [service getCachedData:cateName];
+    dataList = [service getCachedDataInCate:cateName];
     
     assertThatInt(dataList.count, equalToInt(1));
-    NSDictionary *data = [service getCachedData:cateName entityId:testEntityId2];
+    NSDictionary *data = [service getCachedDataInCate:cateName entityId:testEntityId2];
     assertThat(data[@"keyB"], is(@2));
     
-    // deleteCachedData:needSyncToDB:
+    // deleteAllCachedDataInCate:needSyncToDB:
     
-    [service getAndRefreshCachedData:cateName
-                      cacheRefresher:^(JSCacheRefresher *refresher) {
-                          NSMutableArray *arr = [NSMutableArray array];
-                          [arr addObject:@{@"keyA": @1, @"postId":testEntityId1}];
-                          [arr addObject:@{@"keyB": @2, @"postId":testEntityId2}];
-                          [refresher createInCache:arr needSyncToDB:YES];
-                      }
-                      entityIdGetter:^NSString *(NSDictionary *data) {
-                          return data[@"postId"];
-                      }
-            refreshIntervalInSeconds:0];
+    [service getAndRefreshCachedDataInCate:cateName
+                            cacheRefresher:^(JSCacheRefresher *refresher) {
+                                NSMutableArray *arr = [NSMutableArray array];
+                                [arr addObject:@{@"keyA": @1, @"postId":testEntityId1}];
+                                [arr addObject:@{@"keyB": @2, @"postId":testEntityId2}];
+                                [refresher createInCache:arr needSyncToDB:YES];
+                            }
+                            entityIdGetter:^NSString *(NSDictionary *data) {
+                                return data[@"postId"];
+                            }
+                  refreshIntervalInSeconds:0];
     
     // add another
     NSString *newCateName = @"bbb";
-    [service getAndRefreshCachedData:newCateName
-                      cacheRefresher:^(JSCacheRefresher *refresher) {
-                          NSMutableArray *arr = [NSMutableArray array];
-                          [arr addObject:@{@"keyA": @1, @"postId":testEntityId1}];// with the same id
-                          [arr addObject:@{@"keyB": @2, @"postId":testEntityId2}];// with the same id
-                          [refresher createInCache:arr needSyncToDB:YES];
-                      }
-                      entityIdGetter:^NSString *(NSDictionary *data) {
-                          return data[@"postId"];
-                      }
-            refreshIntervalInSeconds:0];
+    [service getAndRefreshCachedDataInCate:newCateName
+                            cacheRefresher:^(JSCacheRefresher *refresher) {
+                                NSMutableArray *arr = [NSMutableArray array];
+                                [arr addObject:@{@"keyA": @1, @"postId":testEntityId1}];// with the same id
+                                [arr addObject:@{@"keyB": @2, @"postId":testEntityId2}];// with the same id
+                                [refresher createInCache:arr needSyncToDB:YES];
+                            }
+                            entityIdGetter:^NSString *(NSDictionary *data) {
+                                return data[@"postId"];
+                            }
+                  refreshIntervalInSeconds:0];
     
     [service deleteCachedDataInAllCategoryWithId:testEntityId1 needSyncToDB:YES];
     
     countInDB = [JSCacheItem countByCriteria:@"where entity_id = '%@'",testEntityId1];
     assertThatInt(countInDB, equalToInt(0));
     
-    dataList = [service getCachedData:cateName];
+    dataList = [service getCachedDataInCate:cateName];
     assertThatInt(dataList.count, equalToInt(1));// delete 1
-    data = [service getCachedData:cateName entityId:testEntityId2];
+    data = [service getCachedDataInCate:cateName entityId:testEntityId2];
     assertThat(data[@"keyB"], is(@2));
     
-    dataList = [service getCachedData:newCateName];
+    dataList = [service getCachedDataInCate:newCateName];
     assertThatInt(dataList.count, equalToInt(1));// delete 1
-    data = [service getCachedData:newCateName entityId:testEntityId2];
+    data = [service getCachedDataInCate:newCateName entityId:testEntityId2];
     assertThat(data[@"keyB"], is(@2));
     
 }
@@ -348,28 +348,28 @@
     
     // add
     for (int i=0; i<10; i++) {
-        [service getAndRefreshCachedData:[NSString stringWithFormat:@"cate-%d",i]
-                          cacheRefresher:^(JSCacheRefresher *refresher) {
-                              [refresher setDbOperationDidFinishBlock:^{
-                              }];
-                              
-                              NSMutableArray *arr = [NSMutableArray array];
-                              for (int i=0; i<10; i++) {
-                                  [arr addObject:@{@"keyA": @1, @"postId":[testEntityId stringByAppendingFormat:@"%d",i]}];
-                              }
-                              [refresher createInCache:arr needSyncToDB:YES];
-                          }
-                          entityIdGetter:^NSString *(NSDictionary *data) {
-                              return data[@"postId"];
-                          }
-                refreshIntervalInSeconds:0];
+        [service getAndRefreshCachedDataInCate:[NSString stringWithFormat:@"cate-%d",i]
+                                cacheRefresher:^(JSCacheRefresher *refresher) {
+                                    [refresher setDbOperationDidFinishBlock:^{
+                                    }];
+                                    
+                                    NSMutableArray *arr = [NSMutableArray array];
+                                    for (int i=0; i<10; i++) {
+                                        [arr addObject:@{@"keyA": @1, @"postId":[testEntityId stringByAppendingFormat:@"%d",i]}];
+                                    }
+                                    [refresher createInCache:arr needSyncToDB:YES];
+                                }
+                                entityIdGetter:^NSString *(NSDictionary *data) {
+                                    return data[@"postId"];
+                                }
+                      refreshIntervalInSeconds:0];
     }
     
     //
     
     [service cleanCache:YES];
     for (int i=0; i<10; i++) {
-        NSArray *dataList = [service getCachedData:[@"cate-" stringByAppendingFormat:@"%d",i]];
+        NSArray *dataList = [service getCachedDataInCate:[@"cate-" stringByAppendingFormat:@"%d",i]];
         assertThat(dataList, nilValue());
     }
     

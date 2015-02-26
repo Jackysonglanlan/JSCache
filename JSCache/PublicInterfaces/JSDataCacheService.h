@@ -42,33 +42,34 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(JSDataCacheService);
 
 #pragma mark Create
 
--(void)addSingleDataToCache:(NSString*)cateName entityId:(NSString*)entityId
-                       data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB;
+-(void)addSingleDataToCate:(NSString*)cateName entityId:(NSString*)entityId
+                      data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB;
 
--(void)insertSingleDataToCache:(NSString*)cateName entityId:(NSString*)entityId atIndex:(NSUInteger)index
-                          data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB;
+-(void)insertSingleDataToCate:(NSString*)cateName entityId:(NSString*)entityId atIndex:(NSUInteger)index
+                         data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB;
 
 #pragma mark Read
 
 -(NSTimeInterval)getRefreshTime:(NSString*)cateName;
 
--(JSCachedData*)getAndRefreshSingleCachedData:(NSString*)cateName entityId:(NSString*)entityId
-                               cacheRefresher:(void (^)(JSCacheRefresher *refresher))refreshBlock
-                     refreshIntervalInSeconds:(NSTimeInterval)interval;
+-(JSCachedData*)getAndRefreshSingleCachedDataInCate:(NSString*)cateName entityId:(NSString*)entityId
+                                     cacheRefresher:(void (^)(JSCacheRefresher *refresher))refreshBlock
+                           refreshIntervalInSeconds:(NSTimeInterval)interval;
 
--(NSArray*)getAndRefreshCachedData:(NSString*)cateName cacheRefresher:(void (^)(JSCacheRefresher *refresher))refresher
-                    entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter refreshIntervalInSeconds:(NSTimeInterval)interval;
+-(NSArray*)getAndRefreshCachedDataInCate:(NSString*)cateName cacheRefresher:(void (^)(JSCacheRefresher *refresher))refresher
+                          entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter
+                refreshIntervalInSeconds:(NSTimeInterval)interval;
 
--(NSArray*)getCachedData:(NSString*)cateName;
+-(NSArray*)getCachedDataInCate:(NSString*)cateName;
 
 -(JSCachedData*)getCachedDataOfEntityId:(NSString*)entityId;
 
--(NSDictionary*)getCachedData:(NSString*)cateName entityId:(NSString*)entityId;
+-(NSDictionary*)getCachedDataInCate:(NSString*)cateName entityId:(NSString*)entityId;
 
 #pragma mark Update
 
--(void)updateCachedDataInMemoryWithCateName:(NSString*)cateName dataList:(NSArray*)dataList
-                             entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter;
+-(void)updateCachedDataInMemoryInCate:(NSString*)cateName dataList:(NSArray*)dataList
+                       entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter;
 
 -(void)updateCachedDataWithId:(NSString*)entityId data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB;
 
@@ -77,9 +78,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(JSDataCacheService);
 // Clean all cached data
 -(void)cleanCache:(BOOL)needSyncToDB;
 
--(void)deleteCachedData:(NSString *)cateName needSyncToDB:(BOOL)needSyncToDB;
+-(void)deleteAllCachedDataInCate:(NSString *)cateName needSyncToDB:(BOOL)needSyncToDB;
 
--(void)deleteCachedDataInMemoryWithCateName:(NSString*)cateName entityId:(NSString*)entityId;
+-(void)deleteCachedDataInMemoryInCate:(NSString*)cateName entityId:(NSString*)entityId;
 
 -(void)deleteCachedDataInAllCategoryWithId:(NSString*)entityId needSyncToDB:(BOOL)needSyncToDB;
 
