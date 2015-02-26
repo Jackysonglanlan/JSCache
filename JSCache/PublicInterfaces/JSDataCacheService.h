@@ -67,9 +67,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(JSDataCacheService);
 
 #pragma mark Update
 
--(void)updateCachedDataOnly:(NSString*)cateName dataList:(NSArray*)dataList entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter;
+-(void)updateCachedDataInMemoryWithCateName:(NSString*)cateName dataList:(NSArray*)dataList
+                             entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter;
 
--(void)updateCachedData:(NSString*)entityId data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB;
+-(void)updateCachedDataWithId:(NSString*)entityId data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB;
 
 #pragma mark Delete
 
@@ -78,8 +79,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(JSDataCacheService);
 
 -(void)deleteCachedData:(NSString *)cateName needSyncToDB:(BOOL)needSyncToDB;
 
--(void)deleteCachedDataOnly:(NSString*)cateName entityId:(NSString*)entityId;
+-(void)deleteCachedDataInMemoryWithCateName:(NSString*)cateName entityId:(NSString*)entityId;
 
--(void)deleteCachedDataInAllCategory:(NSString*)entityId needSyncToDB:(BOOL)needSyncToDB;
+-(void)deleteCachedDataInAllCategoryWithId:(NSString*)entityId needSyncToDB:(BOOL)needSyncToDB;
 
 @end

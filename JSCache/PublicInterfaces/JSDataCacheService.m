@@ -370,13 +370,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   JSCacheCategory *cate = underlineCache[cateName];
   if (cate) {
     [cate addItemFromRawData:data entityId:entityId atIndex:index];
-    [self updateCachedData:entityId data:data needSyncToDB:needSyncToDB];
+    [self updateCachedDataWithId:entityId data:data needSyncToDB:needSyncToDB];
   }
 }
 
 #pragma mark Update
 
--(void)updateCachedDataOnly:(NSString*)cateName dataList:(NSArray*)dataList entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter{
+-(void)updateCachedDataInMemoryWithCateName:(NSString*)cateName dataList:(NSArray*)dataList
+                             entityIdGetter:(NSString* (^)(NSDictionary *data))entityIdGetter{
   JSCacheCategory *cate = underlineCache[cateName];
   if (cate) {
     [cate removeAllItems];
@@ -385,12 +386,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
           NSString *entityId = entityIdGetter(data);// get entity id
           [cate addItemFromRawData:data entityId:entityId];
           
-          [self updateCachedData:entityId data:data needSyncToDB:NO];// don't sync to DB
+          [self updateCachedDataWithId:entityId data:data needSyncToDB:NO];// don't sync to DB
       }
   }
 }
 
--(void)updateCachedData:(NSString*)entityId data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB{
+-(void)updateCachedDataWithId:(NSString*)entityId data:(NSDictionary*)data needSyncToDB:(BOOL)needSyncToDB{
   JSCacheItem *item = [itemPool getItemOfEntityId:entityId];
   [itemPool addOrUpdateItem:item data:data needSyncToDB:needSyncToDB];
 }
@@ -442,12 +443,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(JSDataCacheService);
   // so we CAN't remove items in TTCacheItemPool and in DB.
 }
 
--(void)deleteCachedDataOnly:(NSString*)cateName entityId:(NSString*)entityId{
+-(void)deleteCachedDataInMemoryWithCateName:(NSString*)cateName entityId:(NSString*)entityId{
   JSCacheCategory *cate = underlineCache[cateName];
   [cate removeItemByEntityId:entityId];
 }
 
--(void)deleteCachedDataInAllCategory:(NSString*)entityId needSyncToDB:(BOOL)needSyncToDB{
+-(void)deleteCachedDataInAllCategoryWithId:(NSString*)entityId needSyncToDB:(BOOL)needSyncToDB{
   // delete item in all category    
     for (JSCacheCategory *cate in [underlineCache allValues]) {
         [cate removeItemByEntityId:entityId];

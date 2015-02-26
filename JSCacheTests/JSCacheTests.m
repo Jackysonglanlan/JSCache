@@ -223,7 +223,7 @@
             refreshIntervalInSeconds:0];
     
     // update data
-    [service updateCachedData:testEntityId data:@{@"newKey": @"newValue"} needSyncToDB:YES];
+    [service updateCachedDataWithId:testEntityId data:@{@"newKey": @"newValue"} needSyncToDB:YES];
     
     // should update all the data whose entityId is testEntityId
     NSDictionary *data1 = [service getCachedData:cateName1 entityId:testEntityId];
@@ -285,7 +285,7 @@
                       }
             refreshIntervalInSeconds:0];
     
-    [service deleteCachedDataOnly:cateName entityId:testEntityId1];
+    [service deleteCachedDataInMemoryWithCateName:cateName entityId:testEntityId1];
     
     countInDB = [JSCacheItem countByCriteria:@"where entity_id = '%@'",testEntityId1];
     assertThatInt(countInDB, equalToInt(1)); // still in DB
@@ -326,7 +326,7 @@
                       }
             refreshIntervalInSeconds:0];
     
-    [service deleteCachedDataInAllCategory:testEntityId1 needSyncToDB:YES];
+    [service deleteCachedDataInAllCategoryWithId:testEntityId1 needSyncToDB:YES];
     
     countInDB = [JSCacheItem countByCriteria:@"where entity_id = '%@'",testEntityId1];
     assertThatInt(countInDB, equalToInt(0));
