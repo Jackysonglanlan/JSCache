@@ -103,16 +103,12 @@ DECLARE_PROPERTIES(
 }
 
 -(void)removeItemByEntityId:(NSString*)entityId{
-    JSCacheCateItem *r = nil;
     for (JSCacheCateItem *ref in itemRefs) {
         if ([ref.entityId isEqualToString:entityId]){
-            r = ref;
-            break;
+            [itemRefs removeObject:ref];
+            return;
         }
     }
-
-    if (!r) return;
-    [itemRefs removeObject:r];
 }
 
 -(NSArray*)cachedItems{
